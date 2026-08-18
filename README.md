@@ -1,8 +1,10 @@
 # llm-d: Inference Engineering, Explained
 
+**▶ Live site: https://alexagriffith.github.io/llm-d-course-site/**
+
 A small, linkable site that plays a set of animated explainers in order — the llm-d
 course plus companion Red Hat AI inference-stack animations. Built to be shared: send
-someone the URL and they work through the modules top to bottom.
+someone the URL above and they work through the modules top to bottom.
 
 ## How it's structured (and why)
 
@@ -40,12 +42,12 @@ Pick one:
 
 ## Publishing the site (GitHub Pages)
 
-```
-gh repo create llm-d-course-site --public --source . --push
-```
+The site is **already published** at
+**https://alexagriffith.github.io/llm-d-course-site/** via GitHub Pages,
+deploying from `main` / root. Every push to `main` re-publishes automatically —
+no extra steps.
 
-Then in the repo: **Settings → Pages → Deploy from branch → main / root**. Your site goes live at
-`https://<you>.github.io/llm-d-course-site/`.
+To confirm or change the setup: **Settings → Pages → Deploy from branch → main / root**.
 
 ## Local preview
 
