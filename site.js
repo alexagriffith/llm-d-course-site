@@ -137,21 +137,13 @@ function bridgeEl(text) {
   return b;
 }
 
-// A meta sub-section header inside a chapter: iso-glyph eyebrow + serif title +
-// optional blurb. Groups consecutive parts under a named idea (e.g. "Intro",
-// "The problem it solves", "Building blocks") so a long chapter has structure.
+// A meta sub-section header inside a chapter: serif title + optional blurb.
+// Groups consecutive parts under a named idea (e.g. "Intro", "The problem it
+// solves", "Building blocks") so a long chapter has structure.
 function groupHeadEl(group) {
   const head = document.createElement('div');
   head.className = 'walk-group-head reveal';
   head.id = group.id;
-
-  const eyebrow = document.createElement('div');
-  eyebrow.className = 'section-num';
-  eyebrow.appendChild(isoGlyphSVG());
-  const label = document.createElement('span');
-  label.textContent = 'In this section';
-  eyebrow.appendChild(label);
-  head.appendChild(eyebrow);
 
   const h2 = document.createElement('h2');
   h2.className = 'walk-group-title';
@@ -172,11 +164,11 @@ function groupHeadEl(group) {
 function chapterNavEl(groups) {
   const nav = document.createElement('nav');
   nav.className = 'chapter-nav reveal';
-  nav.setAttribute('aria-label', 'In this section');
+  nav.setAttribute('aria-label', 'Sections');
 
   const kicker = document.createElement('div');
   kicker.className = 'chapter-nav-kicker';
-  kicker.textContent = 'In this section';
+  kicker.textContent = 'Sections';
   nav.appendChild(kicker);
 
   const list = document.createElement('ol');
