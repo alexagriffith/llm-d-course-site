@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>llm-d: Inference Engineering, Explained</title>
+  <meta name="description" content="Short animated explainers on how llm-d and the Red Hat AI inference stack actually work." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1 id="site-title">Loading…</h1>
+    <p id="site-subtitle"></p>
+  </header>
+
+  <main id="content"></main>
+
+  <footer>
+    <p>
+      Videos are hosted separately from this repo (see <code>chapters.json</code> →
+      <code>videoBase</code>). To add a module, drop the file in the Google&nbsp;Drive
+      library and add an entry to <code>chapters.json</code>.
+    </p>
+  </footer>
+
+  <script>
+    async function load() {
+      const res = await fetch('chapters.json', { cache: 'no-store' });
+      const data = await res.json();
+
+      document.title = data.title;
+      document.getElementById('site-title').textContent = data.title;
+      document.getElementById('site-subtitle').textContent = data.subtitle || '';
+
+      const base = (data.videoBase || '').replace(/\/+$/, '');
+      const srcFor = (s) => /^https?:\/\//i.test(s) ? s : (base ? base + '/' + s : s);
+      const hasBase = base.length > 0;
+
+      const main = document.getElementById('content');
+
+      data.sections.forEach((section) => {
+        const sec = document.createElement('section');
+        sec.className = 'section';
+        sec.id = section.id;
+
+        const h2 = document.createElement('h2');
+        h2.textContent = section.title;
+        sec.appendChild(h2);
+
+        if (section.blurb) {
+          const b = document.createElement('p');
+          b.className = 'blurb';
+          b.textContent = section.blurb;
+          sec.appendChild(b);
+        }
+
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+
+        section.items.forEach((item, i) => {
+          const card = document.createElement('article');
+          card.className = 'card';
+          card.id = item.id;
+
+          if (hasBase || /^https?:\/\//i.test(item.src)) {
+            const v = document.createElement('video');
+            v.controls = true;
+            v.preload = 'metadata';
+            v.playsInline = true;
+            v.src = srcFor(item.src);
+            card.appendChild(v);
+          } else {
+            const m = document.createElement('div');
+            m.className = 'missing';
+            m.textContent = 'Set videoBase in chapters.json to play videos';
+            card.appendChild(m);
+          }
+
+          const meta = document.createElement('div');
+          meta.className = 'meta';
+          const num = document.createElement('div');
+          num.className = 'num';
+          num.textContent = String(i + 1).padStart(2, '0');
+          const h3 = document.createElement('h3');
+          h3.textContent = item.title;
+          meta.appendChild(num);
+          meta.appendChild(h3);
+          card.appendChild(meta);
+
+          grid.appendChild(card);
+        });
+
+        sec.appendChild(grid);
+        main.appendChild(sec);
+      });
+    }
+
+    load().catch((e) => {
+      document.getElementById('site-title').textContent = 'Could not load chapters.json';
+      console.error(e);
+    });
+  </script>
+</body>
+</html>

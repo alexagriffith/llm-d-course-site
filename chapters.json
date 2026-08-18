@@ -1,0 +1,47 @@
+{
+  "title": "llm-d: Inference Engineering, Explained",
+  "subtitle": "Short animated explainers on how llm-d and the Red Hat AI inference stack actually work.",
+  "note": "Set videoBase to your hosting root (Google Drive folder link, or a CDN). Each item's `src` is appended to it. Leave src as a full https:// URL to point an item somewhere else entirely.",
+  "videoBase": "",
+  "sections": [
+    {
+      "id": "llm-d-course",
+      "title": "The llm-d Course",
+      "blurb": "Work through it in order. Chapter 1 is deep — it has sub-parts that zoom into HTTPRoute, InferencePool, and the Kubernetes objects underneath.",
+      "items": [
+        { "id": "ch1",        "title": "Chapter 1 — Start here",                         "src": "llm-d-course/chapter-01/01-chapter-1.mp4" },
+        { "id": "ch1-4",      "title": "Chapter 1.4 — Overview",                          "src": "llm-d-course/chapter-01/01.4-overview-v2.mp4" },
+        { "id": "ch1-5",      "title": "Chapter 1.5",                                     "src": "llm-d-course/chapter-01/01.5-chapter.mp4" },
+        { "id": "ch1-5-deep", "title": "1.5 · Part 1 — Inside HTTPRoute & InferencePool (deep dive)", "src": "llm-d-course/chapter-01/01.5-part1-httproute-inferencepool-deep.mp4" },
+        { "id": "ch1-5-into", "title": "1.5 · Part 1 — Into InferencePool (short)",       "src": "llm-d-course/chapter-01/01.5-part1-into-inferencepool.mp4" },
+        { "id": "ch1-k8s",    "title": "The Kubernetes objects behind llm-d",             "src": "llm-d-course/chapter-01/kubernetes-objects-behind-llm-d.mp4" },
+        { "id": "ch2",        "title": "Chapter 2",                                       "src": "llm-d-course/chapter-02/02-chapter-2.mp4" },
+        { "id": "ch3",        "title": "Chapter 3",                                       "src": "llm-d-course/chapter-03/03-chapter-3.mp4" }
+      ]
+    },
+    {
+      "id": "rhaii",
+      "title": "Red Hat AI Inference Platform",
+      "blurb": "How the platform fits together.",
+      "items": [
+        { "id": "rhaii-arch", "title": "Inference Architecture",          "src": "rhaii/inference-architecture.mp4" },
+        { "id": "rhaii-p1",   "title": "RHAII — Part 1",                  "src": "rhaii/rhaii-part1.mp4" },
+        { "id": "rhaii-p2",   "title": "RHAII — Part 2",                  "src": "rhaii/rhaii-part2-web-15mb.mp4" },
+        { "id": "rhaii-plat", "title": "Platform — the full picture",     "src": "rhaii/rhaii-platform-final.mp4" }
+      ]
+    },
+    {
+      "id": "concepts",
+      "title": "Core Concepts",
+      "blurb": "Standalone explainers.",
+      "items": [
+        { "id": "gpu-par",    "title": "GPU Parallelism",                 "src": "gpu-parallelism/gpu-parallelism-final-aug17.mp4" },
+        { "id": "flow",       "title": "Flow Control",                    "src": "flow-control/flow-control.mp4" },
+        { "id": "epp-flow",   "title": "EPP Flow Control",                "src": "flow-control/epp-flow-control.mp4" },
+        { "id": "inf-stack",  "title": "The Inference Stack",             "src": "misc/inference-stack.mp4" },
+        { "id": "agents",     "title": "Agents in Production",            "src": "misc/agents-in-production.mp4" },
+        { "id": "cpu-gpu",    "title": "The CPU–GPU Ratio Shift",     "src": "substack-intros/cpu-gpu-ratio-shift.mp4" }
+      ]
+    }
+  ]
+}

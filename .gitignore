@@ -1,0 +1,10 @@
+# Never commit video bytes — they live in Google Drive / a CDN, not in git.
+*.mp4
+*.mov
+*.webm
+*.gif
+*.MP4
+*.MOV
+
+# OS cruft
+.DS_Store
