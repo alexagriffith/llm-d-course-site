@@ -13,6 +13,17 @@
         "title": "Chapter 1",
         "summary": "",
         "lead": "Start at the top and work down. Each part builds on the one before it, from how llm-d routes a request to the Kubernetes objects you apply to run it.",
+        "groups": [
+          { "id": "intro",   "title": "Intro to llm-d",
+            "blurb": "How a request finds its way to a model server.",
+            "items": ["ch1"] },
+          { "id": "problem", "title": "The problem llm-d solves",
+            "blurb": "What goes wrong at scale, and the cache reuse that fixes it.",
+            "items": ["ch1-2", "ch1-3"] },
+          { "id": "blocks",  "title": "llm-d building blocks",
+            "blurb": "The Kubernetes objects you assemble to serve traffic.",
+            "items": ["ch1-4", "ch1-5", "ch1-5-p1", "ch1-k8s"] }
+        ],
         "items": [
           { "id": "ch1",        "label": "1.1", "title": "Intelligent routing with llm-d",
             "lead": "How a request finds a vLLM pod, and why routing to the pod that already holds the right KV cache is faster.",

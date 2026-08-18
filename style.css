@@ -135,6 +135,61 @@ h1, h2, h3 { color: var(--text-heading); margin: 0; }
 .walk-title { font: var(--text-title); letter-spacing: -0.01em; margin: 0; }
 .walk-lead { font: var(--text-prose); color: var(--text-body); max-width: var(--measure); margin: 0; }
 
+/* ---------- in-chapter jump nav (contents) ---------- */
+.chapter-nav {
+  display: flex; flex-direction: column; gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border: var(--border-hair) dashed var(--rule-dashed);
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+}
+.chapter-nav-kicker {
+  font: var(--text-label); font-family: var(--font-mono);
+  text-transform: uppercase; letter-spacing: var(--ls-label);
+  color: var(--text-muted);
+}
+.chapter-nav-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: var(--space-2);
+  counter-reset: navitem;
+}
+.chapter-nav-list li { counter-increment: navitem; }
+.chapter-nav-list a {
+  font: var(--text-heading); font-family: var(--font-serif);
+  color: var(--text-heading); text-decoration: none;
+  display: inline-flex; align-items: baseline; gap: var(--space-2);
+}
+.chapter-nav-list a::before {
+  content: counter(navitem, decimal-leading-zero);
+  font: var(--text-label); font-family: var(--font-mono);
+  color: var(--link); flex: none;
+}
+.chapter-nav-list a:hover { color: var(--mix); }
+
+/* ---------- meta sub-section header inside a chapter ---------- */
+.walk-group-head {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  scroll-margin-top: var(--space-6);
+}
+.walk-group-title {
+  font: var(--text-title); letter-spacing: -0.01em; margin: 0;
+  padding-bottom: var(--space-4);
+  border-bottom: var(--border-hair) dashed var(--rule-dashed);
+}
+.walk-group-blurb {
+  font: var(--text-prose); color: var(--text-body);
+  max-width: var(--measure); margin: 0;
+}
+
+/* connective line between parts — quieter than a lead, marked with a rule so it
+   reads as a hand-off, not body copy */
+.walk-bridge {
+  font: var(--text-ui); font-family: var(--font-sans);
+  color: var(--text-muted); max-width: var(--measure);
+  margin: 0; padding-left: var(--space-4);
+  border-left: 2px solid var(--rule-dashed);
+}
+
 /* ---------- grid of figures ---------- */
 .grid {
   display: grid;

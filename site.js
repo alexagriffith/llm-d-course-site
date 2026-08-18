@@ -125,11 +125,115 @@ function walkPartEl(item, resolver, index) {
   return part;
 }
 
-// Render a chapter as an ordered, embedded walkthrough.
+// A connective line between parts: "what you just saw → what's next".
+// Reads item.bridge; renders nothing when absent so it never leaves a ghost line.
+function bridgeEl(text) {
+  const b = document.createElement('p');
+  b.className = 'walk-bridge reveal';
+  b.textContent = text;
+  return b;
+}
+
+// A meta sub-section header inside a chapter: iso-glyph eyebrow + serif title +
+// optional blurb. Groups consecutive parts under a named idea (e.g. "Intro",
+// "The problem it solves", "Building blocks") so a long chapter has structure.
+function groupHeadEl(group) {
+  const head = document.createElement('div');
+  head.className = 'walk-group-head reveal';
+  head.id = group.id;
+
+  const eyebrow = document.createElement('div');
+  eyebrow.className = 'section-num';
+  eyebrow.appendChild(isoGlyphSVG());
+  const label = document.createElement('span');
+  label.textContent = 'In this chapter';
+  eyebrow.appendChild(label);
+  head.appendChild(eyebrow);
+
+  const h2 = document.createElement('h2');
+  h2.className = 'walk-group-title';
+  h2.textContent = group.title;
+  head.appendChild(h2);
+
+  if (group.blurb) {
+    const b = document.createElement('p');
+    b.className = 'walk-group-blurb';
+    b.textContent = group.blurb;
+    head.appendChild(b);
+  }
+  return head;
+}
+
+// A small "contents" list at the top of a grouped chapter: one jump link per
+// group. Purely navigational; rendered only when a chapter defines groups.
+function chapterNavEl(groups) {
+  const nav = document.createElement('nav');
+  nav.className = 'chapter-nav reveal';
+  nav.setAttribute('aria-label', 'In this chapter');
+
+  const kicker = document.createElement('div');
+  kicker.className = 'chapter-nav-kicker';
+  kicker.textContent = 'In this chapter';
+  nav.appendChild(kicker);
+
+  const list = document.createElement('ol');
+  list.className = 'chapter-nav-list';
+  groups.forEach((g) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '#' + g.id;
+    a.textContent = g.title;
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+  nav.appendChild(list);
+  return nav;
+}
+
+// Render a chapter as an ordered, embedded walkthrough, with a bridge line
+// leading into each part that has one. When the chapter defines `groups`, the
+// parts are rendered under meta sub-section headers (in group order) and a
+// jump-nav is placed at the top. Any item not listed in a group still renders,
+// in its original order, after the grouped parts.
 function walkthroughEl(chapter, resolver) {
   const wrap = document.createElement('div');
   wrap.className = 'walkthrough';
-  chapter.items.forEach((item, i) => wrap.appendChild(walkPartEl(item, resolver, i)));
+
+  const items = chapter.items || [];
+  const groups = chapter.groups || [];
+
+  if (!groups.length) {
+    items.forEach((item, i) => {
+      if (item.bridge) wrap.appendChild(bridgeEl(item.bridge));
+      wrap.appendChild(walkPartEl(item, resolver, i));
+    });
+    return wrap;
+  }
+
+  const byId = new Map(items.map((it) => [it.id, it]));
+  const claimed = new Set();
+
+  wrap.appendChild(chapterNavEl(groups));
+
+  let idx = 0;
+  groups.forEach((group) => {
+    wrap.appendChild(groupHeadEl(group));
+    (group.items || []).forEach((id) => {
+      const item = byId.get(id);
+      if (!item) return;                 // unknown id in group → skip, don't break
+      claimed.add(id);
+      if (item.bridge) wrap.appendChild(bridgeEl(item.bridge));
+      wrap.appendChild(walkPartEl(item, resolver, idx++));
+    });
+  });
+
+  // Safety net: any part the groups forgot still shows, in file order.
+  items.forEach((item) => {
+    if (claimed.has(item.id)) return;
+    if (item.bridge) wrap.appendChild(bridgeEl(item.bridge));
+    wrap.appendChild(walkPartEl(item, resolver, idx++));
+  });
+
   return wrap;
 }
 
