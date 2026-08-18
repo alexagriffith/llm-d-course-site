@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chapter · Inference Engineering, Explained</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero hero--split">
+      <button class="theme-toggle" id="theme-toggle" type="button">Dark</button>
+      <div class="hero-copy">
+        <a class="back-link" href="index.html">← All animations</a>
+        <h1 id="chapter-title">Loading…</h1>
+        <p id="chapter-summary"></p>
+      </div>
+      <div class="hero-figure" id="hero-figure" aria-hidden="true"></div>
+    </header>
+  </div>
+
+  <main class="wrap" id="content"></main>
+
+  <script src="site.js"></script>
+  <script>
+    (async () => {
+      const data = await loadData();
+      const resolver = makeSrcResolver(data);
+
+      const params = new URLSearchParams(location.search);
+      const wanted = params.get('c');
+      const chapters = (data.course && data.course.chapters) || [];
+      const ch = chapters.find((c) => c.id === wanted) || chapters[0];
+
+      if (!ch) {
+        document.getElementById('chapter-title').textContent = 'Chapter not found';
+        return;
+      }
+
+      document.title = ch.title + ' · ' + data.title;
+      document.getElementById('chapter-title').textContent = ch.title;
+      document.getElementById('chapter-summary').textContent = ch.lead || ch.summary || '';
+
+      // Render the chapter as an ordered, embedded walkthrough.
+      const main = document.getElementById('content');
+      main.appendChild(walkthroughEl(ch, resolver));
+
+      observeReveals(main);
+    })().catch((e) => {
+      document.getElementById('chapter-title').textContent = 'Could not load chapters.json';
+      console.error(e);
+    });
+  </script>
+
+  <!-- Chapter diagram: an abstract layered inference stack that echoes the
+       top-to-bottom walkthrough. No labels, no motion — rendered directly
+       (not inside DiagramCanvas) so it's a still image. Loaded lazily; if the
+       CDN is unreachable the hero is just copy. -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js" crossorigin></script>
+  <script src="ds-bundle.js"></script>
+  <script type="text/babel" data-presets="react">
+    (function mountChapterFigure() {
+      const mount = document.getElementById('hero-figure');
+      const NS = window.InteractiveTechDesignSystem_187b8b;
+      if (!mount || !window.React || !window.ReactDOM || !NS) return;
+      const { IsoStack } = NS;
+      if (!IsoStack) return;
+
+      function ChapterFigure() {
+        return (
+          <div style={{display:'flex', justifyContent:'center', alignItems:'center', minHeight:300}}>
+            <IsoStack width={230} gap={40} spread={20} axisLine={false}
+              layers={[
+                {color:'var(--stream-blue)'},
+                {color:'var(--mix-tint)'},
+                {color:'var(--mix)'},
+                {color:'var(--stream-red)'}
+              ]} />
+          </div>
+        );
+      }
+      ReactDOM.createRoot(mount).render(<ChapterFigure />);
+      mount.removeAttribute('aria-hidden');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+/* Drafting Table — type tokens. Three voices:
+   Source Serif 4 = the explainer's voice (titles + prose),
+   Space Grotesk = structure (UI, buttons, nav),
+   IBM Plex Mono = measurement (chips, axes, numbers). */
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400..700&family=Space+Grotesk:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --font-serif: 'Source Serif 4', serif;
+  --font-sans: 'Space Grotesk', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* scale */
+  --text-display: 600 50px/1.08 var(--font-serif);   /* hero titles */
+  --text-title: 600 34px/1.12 var(--font-serif);     /* section titles */
+  --text-heading: 600 21px/1.3 var(--font-serif);
+  --text-prose: 400 17px/1.62 var(--font-serif);     /* explainer body */
+  --text-ui: 500 14px/1.4 var(--font-sans);          /* buttons, nav, links */
+  --text-label: 400 11px/1.3 var(--font-mono);       /* chips, eyebrows, axes — uppercase, ls .14em */
+  --text-data: 500 13px/1.3 var(--font-mono);        /* numbers in charts */
+
+  --ls-label: .14em;
+}

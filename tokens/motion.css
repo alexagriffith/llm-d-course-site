@@ -1,0 +1,11 @@
+/* Graph Paper — motion. Movement always explains; nothing loops for decoration except flow pulses. */
+:root {
+  --ease-spring: cubic-bezier(.22, 1, .36, 1); /* @kind other */
+  --dur-hover: .18s; /* @kind other */
+  --dur-reveal: .6s; /* @kind other */
+  --dur-explode: .3s; /* @kind other */
+  --dur-fill: 1.1s; /* bars, meters */
+  --dur-draw: 1.5s; /* @kind other */
+  --rise: 12px;           /* reveal travel distance */
+  --stagger: 90ms; /* @kind other */
+}

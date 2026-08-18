@@ -1,104 +1,129 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>llm-d: Inference Engineering, Explained</title>
-  <meta name="description" content="Short animated explainers on how llm-d and the Red Hat AI inference stack actually work." />
+  <title>Inference Engineering, Explained</title>
+  <meta name="description" content="Animated explainers of how modern LLM inference works: llm-d, the Red Hat AI stack, and the core concepts underneath." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1 id="site-title">Loading…</h1>
-    <p id="site-subtitle"></p>
-  </header>
+  <div class="wrap">
+    <header class="hero hero--split">
+      <button class="theme-toggle" id="theme-toggle" type="button">Dark</button>
+      <div class="hero-copy">
+        <h1 id="site-title">Loading…</h1>
+        <p id="site-subtitle"></p>
+      </div>
+      <div class="hero-figure" id="hero-figure" aria-hidden="true"></div>
+    </header>
+  </div>
 
-  <main id="content"></main>
+  <main class="wrap" id="content"></main>
 
-  <footer>
-    <p>
-      Videos are hosted separately from this repo (see <code>chapters.json</code> →
-      <code>videoBase</code>). To add a module, drop the file in the Google&nbsp;Drive
-      library and add an entry to <code>chapters.json</code>.
-    </p>
-  </footer>
-
+  <script src="site.js"></script>
   <script>
-    async function load() {
-      const res = await fetch('chapters.json', { cache: 'no-store' });
-      const data = await res.json();
+    (async () => {
+      const data = await loadData();
+      const resolver = makeSrcResolver(data);
 
       document.title = data.title;
       document.getElementById('site-title').textContent = data.title;
       document.getElementById('site-subtitle').textContent = data.subtitle || '';
 
-      const base = (data.videoBase || '').replace(/\/+$/, '');
-      const srcFor = (s) => /^https?:\/\//i.test(s) ? s : (base ? base + '/' + s : s);
-      const hasBase = base.length > 0;
-
       const main = document.getElementById('content');
+      let num = 0;
 
-      data.sections.forEach((section) => {
+      // Course: a section of chapter link-cards, one per chapter.
+      if (data.course && data.course.chapters && data.course.chapters.length) {
         const sec = document.createElement('section');
         sec.className = 'section';
-        sec.id = section.id;
+        sec.id = data.course.id;
+
+        num += 1;
+        const eyebrow = document.createElement('div');
+        eyebrow.className = 'section-num';
+        eyebrow.appendChild(isoGlyphSVG());
+        const lbl = document.createElement('span');
+        lbl.textContent = 'Section ' + String(num).padStart(2, '0');
+        eyebrow.appendChild(lbl);
+        sec.appendChild(eyebrow);
 
         const h2 = document.createElement('h2');
-        h2.textContent = section.title;
+        h2.textContent = data.course.title;
         sec.appendChild(h2);
-
-        if (section.blurb) {
-          const b = document.createElement('p');
-          b.className = 'blurb';
-          b.textContent = section.blurb;
-          sec.appendChild(b);
-        }
 
         const grid = document.createElement('div');
         grid.className = 'grid';
 
-        section.items.forEach((item, i) => {
-          const card = document.createElement('article');
-          card.className = 'card';
-          card.id = item.id;
+        data.course.chapters.forEach((ch) => {
+          const a = document.createElement('a');
+          a.className = 'chapter-card reveal';
+          a.href = 'chapter.html?c=' + encodeURIComponent(ch.id);
 
-          if (hasBase || /^https?:\/\//i.test(item.src)) {
-            const v = document.createElement('video');
-            v.controls = true;
-            v.preload = 'metadata';
-            v.playsInline = true;
-            v.src = srcFor(item.src);
-            card.appendChild(v);
-          } else {
-            const m = document.createElement('div');
-            m.className = 'missing';
-            m.textContent = 'Set videoBase in chapters.json to play videos';
-            card.appendChild(m);
+          const kicker = document.createElement('div');
+          kicker.className = 'chapter-kicker';
+          kicker.textContent = 'CHAPTER ' + ch.number;
+          a.appendChild(kicker);
+
+          const t = document.createElement('div');
+          t.className = 'chapter-title';
+          t.textContent = ch.title;
+          a.appendChild(t);
+
+          if (ch.summary) {
+            const s = document.createElement('p');
+            s.className = 'chapter-summary';
+            s.textContent = ch.summary;
+            a.appendChild(s);
           }
 
-          const meta = document.createElement('div');
-          meta.className = 'meta';
-          const num = document.createElement('div');
-          num.className = 'num';
-          num.textContent = String(i + 1).padStart(2, '0');
-          const h3 = document.createElement('h3');
-          h3.textContent = item.title;
-          meta.appendChild(num);
-          meta.appendChild(h3);
-          card.appendChild(meta);
-
-          grid.appendChild(card);
+          grid.appendChild(a);
         });
 
         sec.appendChild(grid);
         main.appendChild(sec);
-      });
-    }
+      }
 
-    load().catch((e) => {
+      // Other sections play inline.
+      (data.sections || []).forEach((section) => main.appendChild(sectionEl(section, resolver, ++num)));
+
+      observeReveals(main);
+    })().catch((e) => {
       document.getElementById('site-title').textContent = 'Could not load chapters.json';
       console.error(e);
     });
+  </script>
+
+  <!-- Hero diagram from the design system: an abstract inference shape — a hub
+       fanning inputs out to model-server nodes, no labels. Rendered directly
+       (not inside DiagramCanvas) so it sits on the hero's own graph-paper band
+       with no second background. Loaded lazily; if the CDN is unreachable the
+       hero is just copy. -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js" crossorigin></script>
+  <script src="ds-bundle.js"></script>
+  <script type="text/babel" data-presets="react">
+    (function mountHeroFigure() {
+      const mount = document.getElementById('hero-figure');
+      const NS = window.InteractiveTechDesignSystem_187b8b;
+      if (!mount || !window.React || !window.ReactDOM || !NS) return;
+      const { IsoHub } = NS;
+      if (!IsoHub) return;
+
+      function HeroFigure() {
+        return (
+          <div style={{display:'flex', justifyContent:'center', alignItems:'center', minHeight:300}}>
+            <IsoHub color="var(--mix)" size={86} reach={116} gapY={54} spokeSize={30}
+              left={[{color:'var(--stream-red)'},{color:'var(--stream-blue)'}]}
+              right={[{color:'var(--mix-tint)'},{color:'var(--mix-tint)'},{color:'var(--mix-tint)'}]} />
+          </div>
+        );
+      }
+      ReactDOM.createRoot(mount).render(<HeroFigure />);
+      mount.removeAttribute('aria-hidden');
+    })();
   </script>
 </body>
 </html>

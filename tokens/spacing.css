@@ -1,0 +1,18 @@
+/* Graph Paper — spacing. Everything sits on the 28px grid cell; small steps are quarters of it. */
+:root {
+  --cell: 28px;         /* one graph-paper square — panel heights, big gaps are multiples */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --measure: 640px;     /* max prose width */
+  --radius-chip: 6px;
+  --radius-card: 12px;
+  --radius-pill: 999px;
+  --border-chip: 1.5px; /* chips + node strokes */
+  --border-hair: 1px;
+}

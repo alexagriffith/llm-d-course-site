@@ -8,3 +8,10 @@
 
 # OS cruft
 .DS_Store
+
+# local preview only
+media
+chapters.local.json
+
+# design-system source kit stays local; only ds-bundle.js ships
+_design-system/

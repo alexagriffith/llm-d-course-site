@@ -1,0 +1,72 @@
+/* Drafting Table — color tokens. Warm paper + black ink; red and blue are the inputs, purple is the mix. */
+:root {
+  /* base */
+  --paper: #FAF6EE;            /* page background */
+  --surface-card: #FFFFFF;     /* cards, chips */
+  --surface-diagram: #F5EFE1;  /* graph-paper panels */
+  --grid-line: #E2D8C2;        /* minor grid */
+  --grid-line-strong: #D8CCB1; /* rings, axes */
+  --rule-dashed: #CDB994;      /* dashed frames + rules */
+  --ink: #1A1A1A;              /* primary ink */
+  --ink-2: #3D3A33;            /* body text */
+  --ink-3: #8A8271;            /* labels, captions */
+  --ink-faint: #EDE5D2;        /* empty chart cells, tracks */
+
+  /* the story palette — hues encode meaning, never decoration */
+  --stream-red: #CD302A;       /* input A */
+  --stream-red-deep: #9C211D;
+  --stream-red-tint: #E88A83;
+  --stream-blue: #2C5AB2;      /* input B */
+  --stream-blue-deep: #1D3C7D;
+  --stream-blue-tint: #7C9CD8;
+  --mix: #7A4F9C;              /* the result — primary accent */
+  --mix-deep: #663F86;
+  --mix-tint: #B794D4;
+  --mix-wash: #ECE1F3;
+  --spark: #F2C94C;            /* gold — highlights, "look here" */
+
+  /* chart series order */
+  --chart-1: var(--mix);
+  --chart-2: var(--stream-red);
+  --chart-3: var(--stream-blue);
+  --chart-4: var(--spark);
+  --chart-5: var(--ink);
+
+  /* semantic aliases */
+  --text-body: var(--ink-2);
+  --text-heading: var(--ink);
+  --text-muted: var(--ink-3);
+  --text-on-fill: #FFFFFF;
+  --link: var(--mix-deep);
+  --chip-surface: var(--paper);
+  --track: var(--ink-faint);
+}
+
+[data-theme="dark"] {
+  --paper: #17161B;
+  --surface-card: #1F1D24;
+  --surface-diagram: #1D1B21;
+  --grid-line: #26242B;
+  --grid-line-strong: #312E38;
+  --rule-dashed: #3E3A47;
+  --ink: #F5F1E8;
+  --ink-2: #C9C5BE;
+  --ink-3: #8D8A93;
+  --ink-faint: #26242B;
+
+  --stream-red: #E0564F;
+  --stream-red-deep: #EE8A85;
+  --stream-red-tint: #7A2B27;
+  --stream-blue: #6D8FD4;
+  --stream-blue-deep: #9DB4E4;
+  --stream-blue-tint: #2A4577;
+  --mix: #8B5FB0;
+  --mix-deep: #A578CC;
+  --mix-tint: #5D3E78;
+  --mix-wash: #2A2233;
+  --spark: #F2C94C;
+
+  --text-on-fill: #FFFFFF;
+  --link: var(--mix-deep);
+  --chip-surface: var(--surface-card);
+}

@@ -1,0 +1,8 @@
+{
+  "note": "Videos we have but do not show on the site yet. Not fetched by index.html. Move an item into chapters.json when it is ready to publish.",
+  "items": [
+    { "id": "flow",       "title": "Flow control",           "src": "flow-control/flow-control.mp4",         "reason": "not ready" },
+    { "id": "epp-flow",   "title": "EPP flow control",       "src": "flow-control/epp-flow-control.mp4",     "reason": "not ready" },
+    { "id": "rhaii-plat", "title": "Platform, end to end",   "src": "rhaii/rhaii-platform-final.mp4",        "reason": "larger encode of Part 1 (same 93s content); showing the smaller rhaii-part1.mp4 instead" }
+  ]
+}
