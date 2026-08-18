@@ -2,7 +2,7 @@
   "title": "Inference Engineering, Explained",
   "subtitle": "Animated inference explainers.",
   "note": "Set videoBase to your hosting root (a GitHub Releases download URL, a Drive folder, or a CDN). Each item's `src` is appended to it. Leave src as a full https:// URL to point an item somewhere else.",
-  "videoBase": "",
+  "videoBase": "https://github.com/alexagriffith/llm-d-course-site/releases/download/videos-v1",
   "course": {
     "id": "llm-d-course",
     "title": "The llm-d course",
@@ -16,25 +16,31 @@
         "items": [
           { "id": "ch1",        "label": "1.1", "title": "Intelligent routing with llm-d",
             "lead": "How a request finds a vLLM pod, and why routing to the pod that already holds the right KV cache is faster.",
-            "src": "llm-d-course/chapter-01/01-chapter-1.mp4" },
+            "src": "01-chapter-1.mp4" },
           { "id": "ch1-2",      "label": "1.2", "title": "Managing LLM traffic at scale",
+            "bridge": "Routing gets a request to the right pod. Next, look inside that pod at what serves it.",
             "lead": "Inside a vLLM pod: model weights, the KV cache, and the waiting queue, and what happens when traffic climbs.",
-            "src": "llm-d-course/chapter-01/01.2-chapter.mp4" },
+            "src": "01.2-chapter.mp4" },
           { "id": "ch1-3",      "label": "1.3", "title": "Requests share long prefixes",
+            "bridge": "The pod reuses cache when it can. Next, see why requests share cache in the first place.",
             "lead": "Why so many requests carry the same opening tokens, and how a shared prefix turns into cache you can reuse.",
-            "src": "llm-d-course/chapter-01/01.3-chapter.mp4" },
+            "src": "01.3-chapter.mp4" },
           { "id": "ch1-4",      "label": "1.4", "title": "The objects you kubectl apply",
+            "bridge": "That covers how llm-d serves a request. Next, the Kubernetes objects you apply to make it run.",
             "lead": "An overview of how Gateway, HTTPRoute, and InferencePool wire together into the thing that serves traffic.",
-            "src": "llm-d-course/chapter-01/01.4-overview-v2.mp4" },
+            "src": "01.4-overview-v2.mp4" },
           { "id": "ch1-5",      "label": "1.5", "title": "Inside HTTPRoute and InferencePool",
+            "bridge": "You have seen the objects at a glance. Next, open up the two that route a request to the pods.",
             "lead": "What HTTPRoute and InferencePool each do, and how they hand a request from the URL path to the model server pods.",
-            "src": "llm-d-course/chapter-01/01.5-part1-httproute-inferencepool-deep.mp4" },
+            "src": "01.5-part1-httproute-inferencepool-deep.mp4" },
           { "id": "ch1-5-p1",   "label": "1.5 · Part 1", "title": "Inside HTTPRoute",
+            "bridge": "Now take each object on its own, starting with HTTPRoute.",
             "lead": "A closer look at HTTPRoute on its own: how it matches a request by path prefix and headers and points it at a backend.",
-            "src": "llm-d-course/chapter-01/01.5-part1-into-inferencepool.mp4" },
+            "src": "01.5-part1-into-inferencepool.mp4" },
           { "id": "ch1-k8s",    "label": "Reference", "title": "The Kubernetes objects behind llm-d",
+            "bridge": "Keep this last one as a reference: every object llm-d relies on, in one pass.",
             "lead": "A reference pass over every object llm-d relies on and how they relate.",
-            "src": "llm-d-course/chapter-01/kubernetes-objects-behind-llm-d.mp4" }
+            "src": "kubernetes-objects-behind-llm-d.mp4" }
         ]
       }
     ]
@@ -45,8 +51,8 @@
       "title": "Red Hat AI inference platform",
       "blurb": "How the platform fits together.",
       "items": [
-        { "id": "rhaii-p1",   "title": "Part 1",                           "src": "rhaii/rhaii-part1.mp4" },
-        { "id": "rhaii-p2",   "title": "Part 2",                           "src": "rhaii/rhaii-part2-web-15mb.mp4" }
+        { "id": "rhaii-p1",   "title": "Part 1",                           "src": "rhaii-part1.mp4" },
+        { "id": "rhaii-p2",   "title": "Part 2",                           "src": "rhaii-part2-web-15mb.mp4" }
       ]
     },
     {
@@ -54,11 +60,11 @@
       "title": "Core concepts",
       "blurb": "Standalone explainers, in no particular order.",
       "items": [
-        { "id": "rhaii-arch", "title": "Inference architecture",           "src": "rhaii/inference-architecture.mp4" },
-        { "id": "gpu-par",    "title": "GPU parallelism",                  "src": "gpu-parallelism/gpu-parallelism-final-aug17.mp4" },
-        { "id": "inf-stack",  "title": "The inference stack",              "src": "misc/inference-stack.mp4" },
-        { "id": "agents",     "title": "Agents in production",             "src": "misc/agents-in-production.mp4" },
-        { "id": "cpu-gpu",    "title": "The CPU-to-GPU ratio shift",       "src": "substack-intros/cpu-gpu-ratio-shift.mp4" }
+        { "id": "rhaii-arch", "title": "Inference architecture",           "src": "inference-architecture.mp4" },
+        { "id": "gpu-par",    "title": "GPU parallelism",                  "src": "gpu-parallelism-final-aug17.mp4" },
+        { "id": "inf-stack",  "title": "The inference stack",              "src": "inference-stack.mp4" },
+        { "id": "agents",     "title": "Agents in production",             "src": "agents-in-production.mp4" },
+        { "id": "cpu-gpu",    "title": "The CPU-to-GPU ratio shift",       "src": "cpu-gpu-ratio-shift.mp4" }
       ]
     }
   ]
