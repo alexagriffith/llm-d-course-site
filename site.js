@@ -86,16 +86,19 @@ function walkPartEl(item, resolver, index) {
   const head = document.createElement('div');
   head.className = 'walk-head';
 
-  if (item.label) {
-    const label = document.createElement('div');
-    label.className = 'walk-label';
-    label.textContent = item.label;
-    head.appendChild(label);
-  }
-
+  // The part number (e.g. "1.1") reads as a quiet prefix inside the title rather
+  // than a separate eyebrow, to keep the header uncluttered.
   const t = document.createElement('h2');
   t.className = 'walk-title';
-  t.textContent = item.title;
+  if (item.label) {
+    const num = document.createElement('span');
+    num.className = 'walk-num';
+    num.textContent = item.label;
+    t.appendChild(num);
+    t.appendChild(document.createTextNode(' ' + item.title));
+  } else {
+    t.textContent = item.title;
+  }
   head.appendChild(t);
 
   if (item.lead) {
