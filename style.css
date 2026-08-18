@@ -194,6 +194,37 @@ h1, h2, h3 { color: var(--text-heading); margin: 0; }
   border-left: 2px solid var(--rule-dashed);
 }
 
+/* expandable "what's happening" block under a part's video */
+.walk-details {
+  max-width: var(--measure);
+  border: var(--border-hair) dashed var(--rule-dashed);
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+}
+.walk-details-summary {
+  cursor: pointer; list-style: none;
+  padding: var(--space-3) var(--space-4);
+  font: var(--text-label); font-family: var(--font-mono);
+  text-transform: uppercase; letter-spacing: var(--ls-label);
+  color: var(--link);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.walk-details-summary::-webkit-details-marker { display: none; }
+.walk-details-summary::before {
+  content: "+"; font-family: var(--font-mono); color: var(--mix);
+  width: 1em; text-align: center; flex: none;
+}
+.walk-details[open] .walk-details-summary::before { content: "\2212"; } /* minus */
+.walk-details[open] .walk-details-summary {
+  border-bottom: var(--border-hair) dashed var(--rule-dashed);
+}
+.walk-details-list {
+  margin: 0; padding: var(--space-4) var(--space-5) var(--space-4) var(--space-7);
+  display: flex; flex-direction: column; gap: var(--space-2);
+  font: var(--text-prose); color: var(--text-body);
+}
+.walk-details-list li { padding-left: var(--space-1); }
+
 /* ---------- grid of figures ---------- */
 .grid {
   display: grid;

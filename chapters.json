@@ -22,7 +22,7 @@
             "items": ["ch1-2", "ch1-3"] },
           { "id": "blocks",  "title": "llm-d building blocks",
             "blurb": "The Kubernetes objects you assemble to serve traffic.",
-            "items": ["ch1-4", "ch1-5", "ch1-5-p1", "ch1-k8s"] }
+            "items": ["ch1-4", "ch1-5", "ch1-5-p1", "ch1-5-p2", "ch1-k8s"] }
         ],
         "items": [
           { "id": "ch1",        "label": "1.1", "title": "Intelligent routing with llm-d",
@@ -48,8 +48,20 @@
             "bridge": "Now take each object on its own, starting with HTTPRoute.",
             "lead": "A closer look at HTTPRoute on its own: how it matches a request by path prefix and headers and points it at a backend.",
             "src": "01.5-part1-into-inferencepool.mp4" },
+          { "id": "ch1-5-p2",   "label": "1.5 · Part 2", "title": "Inside InferencePool",
+            "bridge": "HTTPRoute points at an InferencePool. Next, open up what that is.",
+            "lead": "What InferencePool declares, and how the Endpoint Picker routes a request to a ready pod using policies and live metrics like queue depth and cache use.",
+            "src": "01.5-part2-inside-inferencepool.mp4",
+            "details": {
+              "summary": "How InferencePool routes a request",
+              "points": [
+                "InferencePool is a label rule that selects the model server pods, and the port they serve on.",
+                "The Endpoint Picker watches the pool for that rule and the pods for members, keeping one entry for each ready endpoint.",
+                "It scrapes queue depth and cache use from each endpoint and routes on policies plus those metrics.",
+                "The pool declares the members; the picker keeps the ready list."
+              ]
+            } },
           { "id": "ch1-k8s",    "label": "Reference", "title": "The Kubernetes objects behind llm-d",
-            "bridge": "Keep this last one as a reference: every object llm-d relies on, in one pass.",
             "lead": "A reference pass over every object llm-d relies on and how they relate.",
             "src": "kubernetes-objects-behind-llm-d.mp4" }
         ]

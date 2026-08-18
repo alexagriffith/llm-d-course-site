@@ -125,7 +125,36 @@ function walkPartEl(item, resolver, index) {
   }
   part.appendChild(panel);
 
+  // Optional expandable explainer: a <details> the reader can open to see the
+  // step-by-step of what the animation shows, without cluttering the walkthrough.
+  if (item.details && Array.isArray(item.details.points) && item.details.points.length) {
+    part.appendChild(detailsEl(item.details));
+  }
+
   return part;
+}
+
+// An expandable "what's happening" block: a native <details> with a serif
+// summary and a list of plain-English beats. Collapsed by default.
+function detailsEl(details) {
+  const d = document.createElement('details');
+  d.className = 'walk-details';
+
+  const s = document.createElement('summary');
+  s.className = 'walk-details-summary';
+  s.textContent = details.summary || 'What’s happening in this one';
+  d.appendChild(s);
+
+  const ol = document.createElement('ol');
+  ol.className = 'walk-details-list';
+  details.points.forEach((p) => {
+    const li = document.createElement('li');
+    li.textContent = p;
+    ol.appendChild(li);
+  });
+  d.appendChild(ol);
+
+  return d;
 }
 
 // A connective line between parts: "what you just saw → what's next".
