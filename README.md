@@ -12,33 +12,36 @@ someone the URL above and they work through the modules top to bottom.
 re-render would bloat history forever, and GitHub caps files at 100&nbsp;MB. So:
 
 - **This repo** = the website only (`index.html`, `style.css`, `chapters.json`). Tiny, fast, versioned.
-- **The videos** = hosted separately and referenced by URL. The master copies live in
-  Google Drive (`~/animations/`, backed up to Drive), which is the single source of truth.
+- **The videos** = hosted as GitHub Release assets and referenced by URL (see below). Master
+  copies live in `~/animations/` (backed up to Drive), which is the single source of truth.
 
-This is the "keep it in Drive **and** GitHub" split: Drive holds the bytes, GitHub holds
-the presentation, and the two stay in sync through `chapters.json`.
+The website and the videos stay in sync through `chapters.json`.
 
 ## Adding or reordering modules
 
 Everything is driven by `chapters.json` — no code changes needed.
 
-1. Add the video file to the animation library (`~/animations/…`, which syncs to Drive).
-2. Add an entry under the right section in `chapters.json` (order in the file = order on the page).
+1. Add the video file as an asset on the `videos-v1` GitHub Release
+   (`gh release upload videos-v1 <file>.mp4 --repo alexagriffith/llm-d-course-site`).
+2. Add an entry under the right section in `chapters.json`, with `src` set to the
+   asset's **filename only** (order in the file = order on the page).
 3. Commit + push. Done.
 
-Set `videoBase` in `chapters.json` to your hosting root so the site can find the videos
-(see below). Any item whose `src` is already a full `https://` URL is used as-is.
+The site builds each video URL as `videoBase` + `/` + `src`. Any item whose `src` is
+already a full `https://` URL is used as-is instead.
 
 ## Hosting the videos
 
-Pick one:
+The videos are hosted as assets on the **`videos-v1` GitHub Release** of this repo, and
+`videoBase` in `chapters.json` points at that release's download URL:
 
-- **Google Drive (simplest):** put the animation folder in a shared Drive folder, then set
-  `videoBase` to a path/URL your player can reach. For reliable inline `<video>` playback,
-  a direct-file CDN (below) is smoother than Drive share links, which don't always stream well.
-- **Cloudflare R2 / Backblaze B2 / S3 (recommended for a public link):** upload `~/animations/`
-  contents, make the bucket public-read, set `videoBase` to the bucket's public URL. Cheap,
-  clean URLs, streams properly. This is the best option for a link your manager can hand around.
+```
+https://github.com/alexagriffith/llm-d-course-site/releases/download/videos-v1
+```
+
+Because release assets are stored flat (no folders), each `src` in `chapters.json` is just
+the filename. Master copies of all animations still live in `~/animations/` (backed up to
+Drive); the release holds only the ~56&nbsp;MB the site actually references.
 
 ## Publishing the site (GitHub Pages)
 
