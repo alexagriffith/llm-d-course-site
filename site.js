@@ -146,7 +146,7 @@ function groupHeadEl(group) {
   eyebrow.className = 'section-num';
   eyebrow.appendChild(isoGlyphSVG());
   const label = document.createElement('span');
-  label.textContent = 'In this chapter';
+  label.textContent = 'In this section';
   eyebrow.appendChild(label);
   head.appendChild(eyebrow);
 
@@ -169,11 +169,11 @@ function groupHeadEl(group) {
 function chapterNavEl(groups) {
   const nav = document.createElement('nav');
   nav.className = 'chapter-nav reveal';
-  nav.setAttribute('aria-label', 'In this chapter');
+  nav.setAttribute('aria-label', 'In this section');
 
   const kicker = document.createElement('div');
   kicker.className = 'chapter-nav-kicker';
-  kicker.textContent = 'In this chapter';
+  kicker.textContent = 'In this section';
   nav.appendChild(kicker);
 
   const list = document.createElement('ol');
@@ -218,11 +218,13 @@ function walkthroughEl(chapter, resolver) {
   let idx = 0;
   groups.forEach((group) => {
     wrap.appendChild(groupHeadEl(group));
-    (group.items || []).forEach((id) => {
+    (group.items || []).forEach((id, i) => {
       const item = byId.get(id);
       if (!item) return;                 // unknown id in group → skip, don't break
       claimed.add(id);
-      if (item.bridge) wrap.appendChild(bridgeEl(item.bridge));
+      // Keep the connective bridges between parts, but skip the one on a group's
+      // first part — it introduces the section, which the header already does.
+      if (item.bridge && i > 0) wrap.appendChild(bridgeEl(item.bridge));
       wrap.appendChild(walkPartEl(item, resolver, idx++));
     });
   });
