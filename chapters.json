@@ -22,7 +22,7 @@
             "items": ["ch1-2", "ch1-3"] },
           { "id": "blocks",  "title": "llm-d building blocks",
             "blurb": "The Kubernetes objects you assemble to serve traffic.",
-            "items": ["ch1-4", "ch1-5", "ch1-5-p1", "ch1-5-p2", "ch1-k8s"] }
+            "items": ["ch1-4", "ch1-5", "ch1-5-p1", "ch1-5-p2", "ch1-6-p1", "ch1-k8s"] }
         ],
         "items": [
           { "id": "ch1",        "label": "1.1", "title": "Intelligent routing with llm-d",
@@ -113,6 +113,19 @@
                 "The Endpoint Picker watches the pool for that rule and the pods for members, keeping one entry for each ready endpoint.",
                 "It scrapes queue depth and cache use from each endpoint and routes on policies plus those metrics.",
                 "The pool declares the members; the picker keeps the ready list."
+              ]
+            } },
+          { "id": "ch1-6-p1",  "label": "1.6 · Part 1", "title": "Inside InferenceObjective",
+            "bridge": "The pool decides where a request goes. InferenceObjective decides which requests matter most.",
+            "lead": "What InferenceObjective declares, and how the Endpoint Picker turns a request header into a priority that ranks that request against the others in the same pool.",
+            "src": "01.6-part1-inside-inferenceobjective.mp4",
+            "details": {
+              "summary": "How InferenceObjective sets priority",
+              "points": [
+                "InferenceObjective declares a pool reference and a priority integer, and nothing else.",
+                "The Endpoint Picker reads the objective from the request header, looks it up, and treats an unset priority as zero.",
+                "Priority ranks that request against the others in the same pool, so the number only means something beside its siblings.",
+                "Anything below zero is sheddable and gets dropped when the pool is full, which makes zero a boundary rather than a middle value."
               ]
             } },
           { "id": "ch1-k8s",    "label": "Reference", "title": "The Kubernetes objects behind llm-d",
