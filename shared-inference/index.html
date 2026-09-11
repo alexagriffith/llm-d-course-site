@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shared inference</title><style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;color:#edf4fb;background:#07111d}
+*{box-sizing:border-box}body{margin:0}main{max-width:1400px;margin:auto;padding:24px 28px 40px}
+h1{font-size:26px;letter-spacing:-.025em;margin:0 0 20px}h2{font-size:21px;margin:24px 0 6px}
+.view>h2{height:28px}.view>.cols{height:44px;overflow:auto}
+p{font-size:14px;line-height:1.6;color:#b9cad8;margin:6px 0;max-width:88ch}
+a{color:#93c9ff;text-underline-offset:4px}button{font:inherit;color:inherit;background:transparent;border:1px solid #49677f;border-radius:5px;padding:8px 12px;cursor:pointer;font-size:14px}
+button[aria-pressed=true]{background:#0c2136;border-color:#54a7ff}button:disabled{opacity:.4;cursor:default}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #93c9ff;outline-offset:4px}
+#view-nav{display:flex;gap:6px 16px;flex-wrap:wrap;border-bottom:1px solid #364f67;padding-bottom:16px}
+#view-nav a{font-size:14px;padding:6px 0;text-decoration:none}#view-nav a[aria-current=page]{color:#edf4fb;box-shadow:0 2px #54a7ff}
+.flow-modes,.flow-modes [role=group]{display:flex;gap:8px;flex-wrap:wrap}.flow-modes{margin:12px 0}.flow-modes>p{flex-basis:100%}
+.view-controls{height:144px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 0 8px}
+.view-controls>.flow-modes{margin:0;flex-shrink:0}.view-controls>.flow-modes[aria-label="Architecture flow"],.view-controls>.flow-modes[aria-label="Batch flow direction"]{flex-direction:column;align-items:stretch}
+.view-controls [aria-label="Caller paths"]::before{content:'Callers';color:#aec0d0;font-size:12px;align-self:center;min-width:50px}
+.view-controls [aria-label="Flow direction"]::before{content:'Show';color:#aec0d0;font-size:12px;align-self:center;min-width:50px}
+.view-controls [aria-label="Batch operation"]::before{content:'Stage';color:#aec0d0;font-size:12px;align-self:center;min-width:50px}
+.view-controls [aria-label="Flow direction"]{padding-left:12px;border-left:2px solid #364f67}
+.view-controls .flow-modes>p:not([aria-live]){margin:0;font-size:12px;line-height:1.5}
+[hidden]{display:none!important}.flow-modes p[aria-live]{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.candidate{margin:16px 0}.candidate>a{display:block;overflow:auto;border:1px solid #364f67;border-radius:6px}.candidate img{display:block;width:100%;min-width:900px;height:auto;aspect-ratio:1500/970;object-fit:contain;background:#07111d}
+.candidate-tools{font-size:13px;text-align:right;margin:8px 0}.explanation{border-top:1px solid #364f67;padding-top:12px;margin-top:12px}.explanation summary{cursor:pointer;font-size:14px;color:#b9cad8}.explanation p{margin-top:12px}
+.view-pager{display:flex;justify-content:space-between;align-items:center;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(1344px,calc(100% - 28px));background:#07111d;z-index:10;padding:12px 0;border-top:1px solid #364f67}.view-pager span{font-size:13px;color:#b9cad8}body{padding-bottom:80px}
+@media(max-width:700px){main{padding:18px 14px}h1{font-size:23px}#view-nav{gap:4px 12px}.flow-modes button{padding:8px;font-size:13px}.view>h2{height:54px}.view>.cols{height:64px}.view-controls{height:180px}}
+</style></head><body><main><h1>Shared inference</h1><nav id="view-nav" aria-label="Inference topics"></nav><div id="views"></div><script>
+const views=[{"id":"architecture","title":"Shared architecture","question":"Where do live, sync batch, and async requests enter the shared serving path?"},{"id":"batch","title":"batch API → inference","question":"Where does the batch API call terminate, and how does a job become model requests?"},{"id":"priority","title":"Priority and endpoint selection","question":"Who assigns priority, and how does Endpoint Picker use it?"},{"id":"queues","title":"Queues and overload","question":"What waits where, and what protection happens before dispatch?"},{"id":"retry","title":"Errors, results and retry","question":"Who sends the error, retains the request, and makes the next attempt?"},{"id":"objects","title":"Control-plane objects","question":"Which objects configure the runtime components?"}];
+for(const v of views){
+ const id=v.id,card=document.createElement('section');card.id=id;card.className='view';
+ document.getElementById('view-nav').insertAdjacentHTML('beforeend','<a href="#'+id+'">'+v.title+'</a>');
+ card.innerHTML='<h2>'+v.title+'</h2><div class="cols"><p>'+v.question+'</p></div>';
+ const figure=document.createElement('figure');figure.className='candidate';
+ figure.innerHTML='<a href="#" target="_blank" rel="noopener"><img alt="'+v.title+'"></a><div class="candidate-tools"><a href="#" target="_blank" rel="noopener">Open diagram ↗</a></div>';
+ card.append(figure);document.getElementById('views').append(card);
+  if(id==='architecture'){
+  const modes=document.createElement('div');modes.className='flow-modes';modes.setAttribute('aria-label','Architecture flow');
+  modes.innerHTML='<div role="group" aria-label="Caller paths"><button type="button" data-caller="all">All</button><button type="button" data-caller="live">Live</button><button type="button" data-caller="sync">Sync</button><button type="button" data-caller="async">Async</button></div><div role="group" aria-label="Flow direction"><button type="button" data-flow="requests">Requests</button><button type="button" data-flow="results">Responses and results</button></div><p class="muted" aria-live="polite"></p>';
+ figure.before(modes);
+  const legend=document.createElement('p');legend.className='muted';legend.style.fontSize='14px';legend.textContent='Blue: live HTTP. Purple: batch and async transport. Gray: Gateway ↔ vLLM. Arrowheads show direction; dashed arrows connect Gateway and Endpoint Picker.';modes.append(legend);
+  const descriptions={requests:'Envoy receives HTTP from all three callers and consults Endpoint Picker.',results:'Envoy returns HTTP to each caller. Async Processor publishes terminal results for collection.'};
+  const questions={requests:'Where do live, sync batch, and async requests enter the shared serving path?',results:'How do inference responses return to live, sync batch, and async callers?'};
+  let selectedFlow='requests',selectedCaller='all';
+  const callers={live:'live client',sync:'sync batch processor',async:'Async Processor'};
+  const focusedDescriptions={live:{requests:'Live client sends HTTP to Envoy, which consults Endpoint Picker.',results:'The selected vLLM replica responds through Envoy to the live client.'},sync:{requests:'The batch processor sends HTTP to Envoy, which consults Endpoint Picker.',results:'The selected vLLM replica responds through Envoy to the batch processor.'},async:{requests:'The batch processor queues requests. Async Processor sends HTTP to Envoy.',results:'Envoy returns HTTP to Async Processor, which publishes results for batch collection.'}};
+  function showArchitecture(){const mode=selectedFlow,caller=selectedCaller;const url=`review-candidates/architecture-${mode}${caller==='all'?'':'-'+caller}.svg`;const description=caller==='all'?descriptions[mode]:focusedDescriptions[caller][mode];card.querySelector('.cols p').textContent=caller==='all'?questions[mode]:mode==='requests'?`How do requests from the ${callers[caller]} enter the shared serving path?`:`How do inference responses return to the ${callers[caller]}?`;figure.querySelector('img').src=url;figure.querySelector('img').alt='Shared architecture: '+description;figure.querySelector('a').href=url;figure.querySelector('.candidate-tools a:last-child').href=url;modes.querySelector('p').textContent=description;modes.querySelectorAll('[data-flow]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.flow===mode)));modes.querySelectorAll('[data-caller]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.caller===caller)));}
+  modes.querySelectorAll('[data-flow]').forEach(b=>b.onclick=()=>{selectedFlow=b.dataset.flow;showArchitecture();});modes.querySelectorAll('[data-caller]').forEach(b=>b.onclick=()=>{selectedCaller=b.dataset.caller;showArchitecture();});showArchitecture();
+ }
+ if(id==='batch'){
+  const modes=document.createElement('div');modes.className='flow-modes';modes.setAttribute('role','group');modes.setAttribute('aria-label','Batch flow direction');
+  modes.innerHTML='<div role="group" aria-label="Batch operation"><button type="button" data-batch-operation="submission">Submit batch</button><button type="button" data-batch-operation="execution">Run and retrieve output</button></div><div role="group" aria-label="Flow direction"><button type="button" data-batch-flow="requests">Requests</button><button type="button" data-batch-flow="results">Responses and results</button></div>';
+  figure.before(modes);
+  const questions={submission:{requests:'Where does the client submit a batch job?',results:'What do file upload and batch creation return?'},execution:{requests:'How are inference requests dispatched and output files requested?',results:'How do inference results become output files the client can download?'}};
+  let operation='submission',direction='requests';
+  function showBatch(){const file=operation==='submission'?'batch-submission':(direction==='requests'?'batch':'batch-results');const url=`review-candidates/${file}.svg`,question=operation==='submission'?'How does the client upload a file and create a batch from it?':questions[operation][direction];card.querySelector('.cols p').textContent=question;figure.querySelector('img').src=url;figure.querySelector('img').alt=question;figure.querySelector('a').href=url;figure.querySelector('.candidate-tools a:last-child').href=url;modes.querySelector('[aria-label="Flow direction"]').hidden=operation==='submission';modes.querySelectorAll('[data-batch-flow]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.batchFlow===direction)));modes.querySelectorAll('[data-batch-operation]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.batchOperation===operation)));}
+  modes.querySelectorAll('[data-batch-flow]').forEach(b=>b.onclick=()=>{direction=b.dataset.batchFlow;showBatch();});modes.querySelectorAll('[data-batch-operation]').forEach(b=>b.onclick=()=>{operation=b.dataset.batchOperation;showBatch();});showBatch();
+ }
+ if(id==='queues'){
+  const answer=document.createElement('p');answer.className='queue-answer muted';answer.style.fontSize='14px';figure.before(answer);
+  const modes=document.createElement('div');modes.className='flow-modes';modes.setAttribute('role','group');modes.setAttribute('aria-label','Queue question');
+  modes.innerHTML='<button type="button" data-queues="locations">Queue flow</button><button type="button" data-queues="protection">Admission</button><button type="button" data-queues="eviction">In-flight eviction</button>';
+  figure.before(modes);
+  const questions={locations:'How does work move through the queues?',protection:'How does admission control requests before dispatch?',eviction:'What can happen when an in-flight request is evicted?'};
+  const directions=document.createElement('div');directions.className='flow-modes';directions.setAttribute('role','group');directions.setAttribute('aria-label','Queue flow direction');directions.innerHTML='<button type="button" data-direction="requests">Requests</button><button type="button" data-direction="results">Responses and results</button><button type="button" data-direction="all">All</button>';modes.after(directions);
+  let queueDirection='requests';
+  function showQueues(mode){const url=`review-candidates/queues-${mode==='locations'?queueDirection:mode}.svg`;const question=mode==='locations'?{requests:'Where do jobs and inference requests wait before execution?',results:'How do responses reach callers and final results reach the batch processor?',all:'Where are the queues, and how does work move between them?'}[queueDirection]:questions[mode];card.querySelector('.cols p').textContent=question;answer.textContent={locations:'Batch gateway: job queue. Optional async transport: request queue, retry schedule and result queue. Endpoint Picker: in-memory admission queue. Each vLLM replica: its own waiting queue before execution.',protection:'Admission holds requests in the Endpoint Picker before dispatch. Once admitted, a request is forwarded to a replica; rejection returns an HTTP error instead.',eviction:'With eviction enabled, Endpoint Picker selects a tracked in-flight request and sends an ext_proc ImmediateResponse to Envoy. Envoy stops the backend HTTP stream for that request. The caller gets 429 if headers have not been sent; otherwise the stream may reset.'}[mode];figure.querySelector('img').src=url;figure.querySelector('img').alt=question;figure.querySelector('a').href=url;figure.querySelector('.candidate-tools a:last-child').href=url;card.dataset.queueMode=mode;directions.hidden=mode!=='locations';modes.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.queues===mode)));directions.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.direction===queueDirection)));}
+  const evictionCallers=document.createElement('div');evictionCallers.className='flow-modes';evictionCallers.setAttribute('role','group');evictionCallers.setAttribute('aria-label','Evicted caller');evictionCallers.innerHTML='<button type="button" data-evicted-caller="live">Live caller</button><button type="button" data-evicted-caller="async">Async caller · 429 and retry</button>';directions.after(evictionCallers);
+  let evictedCaller='live';const baseShowQueues=showQueues;
+  showQueues=function(mode){baseShowQueues(mode);evictionCallers.hidden=mode!=='eviction';if(mode==='eviction'){
+    if(evictedCaller==='async'){const url='review-candidates/queues-eviction-async.svg';const question='How can an async request retry after eviction returns 429?';card.querySelector('.cols p').textContent=question;figure.querySelector('img').src=url;figure.querySelector('img').alt=question;figure.querySelector('a').href=url;figure.querySelector('.candidate-tools a:last-child').href=url;answer.textContent='This example is evicted before response headers: Envoy returns 429 to Async Processor. If retry policy permits, the transport retains the request until its retry time, returns it to the request queue, and Async Processor sends a new HTTP attempt. Otherwise it publishes a final outcome.';}
+    else answer.textContent+=' The live caller decides whether to retry; Endpoint Picker does not retain or resubmit it.';
+  }evictionCallers.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.evictedCaller===evictedCaller)));};
+  evictionCallers.querySelectorAll('button').forEach(b=>b.onclick=()=>{evictedCaller=b.dataset.evictedCaller;showQueues('eviction');});
+  directions.querySelectorAll('button').forEach(b=>b.onclick=()=>{queueDirection=b.dataset.direction;showQueues('locations');});
+  modes.querySelectorAll('button').forEach(b=>b.onclick=()=>showQueues(b.dataset.queues));showQueues('locations');
+ }
+ if(id==='objects'){
+  const modes=document.createElement('div');modes.className='flow-modes';modes.setAttribute('role','group');modes.setAttribute('aria-label','Control-plane question');
+  modes.innerHTML='<button type="button" data-objects="created">Resource creation</button><button type="button" data-objects="routing">Routing references</button>';
+  figure.before(modes);
+  const questions={created:'What resources does KServe reconcile?',routing:'How do routing objects connect to the serving components?'};
+  function showObjects(mode){const url=`review-candidates/objects-${mode}.svg`;card.querySelector('.cols p').textContent=questions[mode];figure.querySelector('img').src=url;figure.querySelector('img').alt=questions[mode];figure.querySelector('a').href=url;figure.querySelector('.candidate-tools a:last-child').href=url;modes.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.objects===mode)));}
+  modes.querySelectorAll('button').forEach(b=>b.onclick=()=>showObjects(b.dataset.objects));showObjects('created');
+ }
+ if(id==='priority'){
+  const modes=document.createElement('div');modes.className='flow-modes';modes.setAttribute('role','group');modes.setAttribute('aria-label','Priority explanation');modes.innerHTML='<button type="button" data-priority="assignment">Assign and apply priority</button><button type="button" data-priority="ranking">Objectives sharing a pool</button>';figure.before(modes);
+  function showPriority(mode){const url=`review-candidates/priority${mode==='ranking'?'-ranking':''}.svg`;const question=mode==='ranking'?'How do multiple objectives share one pool, and which priority ranks higher?':'Who assigns priority, and how does Endpoint Picker use it?';card.querySelector('.cols p').textContent=question;figure.querySelector('img').src=url;figure.querySelector('img').alt=question;figure.querySelector('a').href=url;figure.querySelector('.candidate-tools a:last-child').href=url;modes.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.priority===mode)));}
+  modes.querySelectorAll('button').forEach(b=>b.onclick=()=>showPriority(b.dataset.priority));showPriority('assignment');
+ }
+ if(id==='retry'){
+  const answer=document.createElement('p');answer.className='muted';answer.style.fontSize='14px';answer.textContent='In this admission-rejection example, Endpoint Picker constructs the 429 and Envoy sends it to Async Processor. Async Processor checks retry policy. The async transport retains eligible requests in its retry schedule, then returns them to the request queue. Async Processor consumes the request and sends the next HTTP attempt.';figure.before(answer);
+  const admissionAnswer=answer.textContent;
+  const modes=document.createElement('div');modes.className='flow-modes';modes.setAttribute('role','group');modes.setAttribute('aria-label','Error mechanism');modes.innerHTML='<button type="button" data-error="admission">Admission · 429</button><button type="button" data-error="eviction">Eviction · 429</button><button type="button" data-error="server">Backend · 503</button><button type="button" data-error="transport">Transport failure</button>';figure.before(modes);
+  const errorViews={admission:['retry','Who sends the error, retains the request, and makes the next attempt?',admissionAnswer],eviction:['queues-eviction-async','Who terminates an in-flight request, and who can retry it?','Endpoint Picker signals eviction; Envoy stops the backend HTTP stream and returns 429 before response headers. Async Processor checks retry policy, and the transport schedules eligible requests for another attempt. A post-header stream reset is a different caller outcome.'],server:['retry-server','How does a backend HTTP error reach Async Processor?','In this 503 example, the selected model server returns an HTTP error through Envoy. Async Processor classifies it as a server error and applies retry policy. Eligible work is scheduled again; terminal outcomes go to the result queue.'],transport:['retry-transport','What happens when the HTTP attempt fails without a response?','The HTTP client inside Async Processor detects a send or connection failure; no HTTP error response is received from Envoy. In the pinned implementation, this send failure is classified UNKNOWN and is not retried. Async Processor emits a final error result to the result queue; the batch processor collects it.']};
+  errorViews.transport=['retry-transport','How does Async Processor detect a failed HTTP attempt?','The HTTP client returns an error from client.Do(), rather than a response object. Async Processor receives that error and publishes a final error result in the pinned implementation. This does not prove the backend never received or processed the request. A response whose body fails while being read is a separate error path.'];
+  function showError(mode){const[file,question,description]=errorViews[mode],url=`review-candidates/${file}.svg`;card.querySelector('.cols p').textContent=question;answer.textContent=description;figure.querySelector('img').src=url;figure.querySelector('img').alt=question;figure.querySelector('a').href=url;figure.querySelector('.candidate-tools a:last-child').href=url;modes.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.error===mode)));}
+  modes.querySelectorAll('button').forEach(b=>b.onclick=()=>showError(b.dataset.error));showError('admission');
+ }
+
+ if(id==='architecture')card.querySelectorAll('.flow-modes>p:not([aria-live])').forEach(p=>p.remove());
+ const controls=document.createElement('div');controls.className='view-controls';controls.setAttribute('aria-label','Diagram settings');
+ for(const group of [...card.children].filter(n=>n.classList.contains('flow-modes')))controls.append(group);
+ figure.before(controls);
+ const details=document.createElement('details');details.className='explanation';details.innerHTML='<summary>Details</summary>';
+ // Keep long answers available without pushing the diagram down the page.
+ for(const p of [...card.children].filter(n=>n.tagName==='P'))details.append(p);
+ if(details.children.length>1)card.append(details);
+}
+const pager=document.createElement('div');pager.className='view-pager';
+pager.innerHTML='<button type="button" id="previous-view">← Previous view</button><span id="view-position" aria-live="polite"></span><button type="button" id="next-view">Next view →</button>';
+document.getElementById('views').after(pager);
+let activeView=0;
+function selectView(){
+ const index=views.findIndex(v=>'#'+v.id===location.hash);activeView=index<0?0:index;
+ views.forEach((v,i)=>{document.getElementById(v.id).hidden=i!==activeView;const link=document.querySelector('#view-nav a[href="#'+v.id+'"]');if(i===activeView)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current')});
+ document.getElementById('view-position').textContent=(activeView+1)+' / '+views.length;
+ document.getElementById('previous-view').disabled=activeView===0;
+ document.getElementById('next-view').disabled=activeView===views.length-1;
+}
+document.getElementById('previous-view').onclick=()=>{location.hash=views[activeView-1].id};
+document.getElementById('next-view').onclick=()=>{location.hash=views[activeView+1].id};
+window.addEventListener('hashchange',selectView);selectView();
+
+// Hash navigation must not change the shared page origin between topics.
+window.addEventListener('hashchange',()=>window.scrollTo(0,0));window.scrollTo(0,0);
+</script></main></body></html>

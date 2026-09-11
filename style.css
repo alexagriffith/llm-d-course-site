@@ -62,6 +62,9 @@ h1, h2, h3 { color: var(--text-heading); margin: 0; }
 /* split hero: copy left, interactive diagram right */
 .hero--split { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--space-6); align-items: center; }
 .hero-copy { min-width: 0; }
+.shared-inference-link { display: inline-block; margin-top: 12px; padding: 10px 14px; border: 1px solid currentColor; border-radius: 6px; color: inherit; font-weight: 600; text-decoration: none; }
+.shared-inference-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.shared-inference-link:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .hero-figure { min-height: 0; }
 .hero-figure:empty { display: none; }           /* no diagram → no empty column */
 .hero--split:has(.hero-figure:empty) { display: block; }
