@@ -14,7 +14,6 @@
       <div class="hero-copy">
         <h1 id="site-title">Loading…</h1>
         <p id="site-subtitle"></p>
-        <a class="shared-inference-link" href="shared-inference/">Shared Inference · Interactive diagrams →</a>
       </div>
       <div class="hero-figure" id="hero-figure" aria-hidden="true"></div>
     </header>
@@ -88,6 +87,20 @@
 
       // Other sections play inline.
       (data.sections || []).forEach((section) => main.appendChild(sectionEl(section, resolver, ++num)));
+
+      const shared = sectionEl({
+        id: 'shared-inference',
+        title: 'Shared Inference',
+        blurb: 'Explore live and batch requests through a shared inference pool.',
+        items: []
+      }, resolver, ++num);
+      shared.querySelector('.grid').innerHTML = `
+        <a class="chapter-card reveal" href="shared-inference/">
+          <div class="chapter-kicker">INTERACTIVE DIAGRAMS</div>
+          <div class="chapter-title">Explore Shared Inference →</div>
+          <p class="chapter-summary">Architecture, batch processing, priority, queues, retries, and control-plane objects.</p>
+        </a>`;
+      main.appendChild(shared);
 
       observeReveals(main);
     })().catch((e) => {

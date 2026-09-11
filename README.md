@@ -54,7 +54,7 @@ To confirm or change the setup: **Settings → Pages → Deploy from branch → 
 
 ## Shared inference diagrams
 
-The homepage's **Shared inference** button opens `shared-inference/index.html`.
+The homepage's **Shared Inference** section links to `shared-inference/index.html`.
 This interactive section includes six code-grounded topics and all 24 SVG assets.
 Deployment proposals and authoring/review controls are intentionally excluded.
 Run `node scripts/check-shared-inference.cjs` before publishing changes to it.
