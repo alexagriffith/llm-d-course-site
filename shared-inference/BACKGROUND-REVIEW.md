@@ -2,6 +2,18 @@
 
 ## Current revision — supersedes the selector design below
 
+Latest caption and Details pass: removed both enqueue captions from the generator
+and all 35 exports, preserving connectors. Inspected fresh architecture-request,
+combined-queue and admission-retry renders. Rewrote Details using STYLE-LAW:
+explicit actors, literal queue language, mechanism before limits, and full sentences.
+Mode-specific explanations now precede shared queue notes. Shared notes use one
+source across architecture, queues and retry. Retained pinned implementation
+conditions and failure-path exceptions. Rechecked router objective lookup locally
+and async worker cancellation/deadline handling against the pinned source below.
+Built-in browser verified expanded Details in all five topics that have them;
+all images loaded. Static consistency and whitespace checks passed. This scoped
+pass does not expand the earlier browser-pixel or runtime validation claims.
+
 Removed the extra workload selector, top narration and background-node subtext.
 Both producers appear in shared request/return diagrams. Eleven old background
 URLs are identical compatibility copies of the canonical views, not separate modes.

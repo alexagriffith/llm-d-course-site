@@ -21,6 +21,10 @@ const variants=expected.filter(n=>/^(architecture-(requests|results)(-async)?|qu
 expected.push(...variants);expected.sort();
 assert.deepEqual(fs.readdirSync(path.join(section,'review-candidates')).sort(),expected);
 assert(!html.includes('data-workload'), 'No redundant workload selector');
+assert(html.includes('architecture:sharedDetails,queues:sharedDetails,retry:sharedDetails'),'Shared queue explanations stay consistent');
+assert(html.includes('Request IDs let consumers match results to requests.'),'Keep result correlation distinct from destination selection');
+assert(html.includes('Shutdown cancellation can requeue work'),'Retain send-failure exception');
+assert(html.includes('priority value alone does not reserve capacity'),'Retain priority boundary');
 assert(!/for batch collection|batch processor collects it|Background app selects|Batch collector selects/.test(html),'No stale batch-only Details');
 for(const name of variants){const svg=fs.readFileSync(path.join(section,'review-candidates',name),'utf8');assert(svg.includes('id="background-application"'),name);assert.equal(svg,fs.readFileSync(path.join(section,'review-candidates',name.replace('-background.svg','.svg')),'utf8'), 'Old links must show the same shared view');assert(!svg.includes('opacity:.4!important'),name);}
 for(const name of expected){
@@ -32,7 +36,8 @@ for(const name of expected){
   assert(background[1].includes('>Background application</text>'),name);
  }
  const entry=svg.match(/<g id="background-request">([\s\S]*?)<\/g>/);
- if(entry)assert(entry[1].includes('>Enqueue</tspan>')&&entry[1].includes('>requests</tspan>'),`${name}: consistent queue-entry label`);
+ if(entry)assert(entry[1].includes('<path ')&&!entry[1].includes('<text'),`${name}: queue-entry arrow without redundant caption`);
+ assert(!svg.includes('id="batch-enqueue-label"'),`${name}: no redundant batch enqueue caption`);
  assert(!svg.includes('Queue producer / consumer'),name);
  assert(!svg.includes('<text x="55" y="62"'),'No added top narration');
  if(/^(retry(-server|-transport)?|queues-all)(-background)?\.svg$/.test(name)){

@@ -2,14 +2,12 @@
 const fs=require('node:fs'), path=require('node:path');
 const dir=path.resolve(__dirname,'../shared-inference/review-candidates');
 const node='<g id="background-application"><rect class="box box-batch" x="75" y="675" width="230" height="72" rx="10"/><text class="title" x="190" y="711">Background application</text></g>';
-const request='<g id="background-request"><path class="path-batch" d="M305 711 H388 Q400 693 412 711 H525"/><text class="edge-label" x="455" y="681" text-anchor="middle"><tspan x="455">Enqueue</tspan><tspan x="455" dy="18">requests</tspan></text></g>';
-const batchLabel='<text id="batch-enqueue-label" class="edge-label" x="630" y="614" text-anchor="start">Enqueue requests</text>';
+const request='<g id="background-request"><path class="path-batch" d="M305 711 H388 Q400 693 412 711 H525"/></g>';
 const result='<g id="background-result"><path class="path-batch" d="M825 887 V918 Q825 938 805 938 H210 Q190 938 190 918 V747"/><text class="edge-label" x="330" y="924" text-anchor="middle">Result · request ID</text></g>';
 for(const name of fs.readdirSync(dir).filter(n=>n.endsWith('.svg')&&!n.includes('-background'))){
  let svg=fs.readFileSync(path.join(dir,name),'utf8').replace(/<!-- background:start -->[\s\S]*?<!-- background:end -->/g,'');
  svg=svg.replaceAll('Optional async transport','Optional queued dispatch');
  svg=svg.replace(/<text id="batch-enqueue-label"[^>]*>[^<]*<\/text>/g,'');
- svg=svg.replace(/(<g\b[^>]*id="async-publish-path"[^>]*>)([\s\S]*?)(<\/g>)/,(_,open,body,close)=>open+body+batchLabel+close);
  const relevant=/^architecture-(requests|results)(-async)?\.svg$/.test(name)||/^queues-(requests|results|all|eviction-async)\.svg$/.test(name)||/^retry(?:-server|-transport)?\.svg$/.test(name);
  if(relevant){
   svg=svg.replace(/<desc id="svg-desc">[\s\S]*?<\/desc>/,'<desc id="svg-desc">Shared queued inference supports batch processors and compatible background applications. Queue symbols are logical roles. Each workload collects from configured outputs using request IDs; result paths do not imply automatic routing or broadcast. Retry schedule is a Redis-style example.</desc>');
