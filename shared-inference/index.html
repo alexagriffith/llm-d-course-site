@@ -99,7 +99,27 @@ for(const v of views){
  const controls=document.createElement('div');controls.className='view-controls';controls.setAttribute('aria-label','Diagram settings');
  for(const group of [...card.children].filter(n=>n.classList.contains('flow-modes')))controls.append(group);
  figure.before(controls);
+ if(['architecture','queues','retry'].includes(id)){
+  const workload=document.createElement('div');workload.className='flow-modes';workload.setAttribute('role','group');workload.setAttribute('aria-label','Queued workload');
+  workload.innerHTML='<span style="font-size:12px;align-self:center;color:#aec0d0">Queued workload</span><button type="button" data-workload="batch" aria-pressed="true">Batch integration</button><button type="button" data-workload="background" aria-pressed="false">Background app</button>';
+  controls.append(workload);let selected='batch',baseQuestion=card.querySelector('.cols p').textContent,lastBase='';
+  const img=figure.querySelector('img');
+  function applyWorkload(){
+   const base=img.getAttribute('src').replace('-background.svg','.svg');
+   if(base!==lastBase){baseQuestion=card.querySelector('.cols p').textContent;lastBase=base;}
+   const supported=/\/(architecture-(requests|results)(-async)?|queues-(requests|results|all|eviction-async)|retry(-server|-transport)?)\.svg$/.test(base);
+   workload.hidden=!supported;
+   workload.querySelector('[data-workload="batch"]').textContent=base.includes('requests')||base.includes('queues-all')?'All producers':'Batch collector';
+   const target=supported&&selected==='background'?base.replace('.svg','-background.svg'):base;
+   if(img.getAttribute('src')!==target)img.setAttribute('src',target);
+   figure.querySelectorAll('a').forEach(a=>a.href=target);
+   if(supported){const q=card.querySelector('.cols p');q.textContent=selected==='background'?(id==='architecture'?(base.includes('requests')?'How does a background application queue inference without Batch Gateway?':'How does a background application collect its inference results?'):baseQuestion.replace('the batch processor','the background application')):baseQuestion;img.alt=q.textContent;const live=card.querySelector('[aria-live]');if(live)live.textContent=q.textContent;}
+  }
+  workload.querySelectorAll('button').forEach(b=>b.onclick=()=>{selected=b.dataset.workload;workload.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyWorkload();});
+  new MutationObserver(applyWorkload).observe(img,{attributes:true,attributeFilter:['src']});applyWorkload();
+ }
  const details=document.createElement('details');details.className='explanation';details.innerHTML='<summary>Details</summary>';
+ if(['architecture','queues','retry'].includes(id)){const note=document.createElement('p');note.textContent='Queued requests can come from Batch Gateway or a compatible background application. Background app selects an application result consumer; Batch collector selects the batch processor. Configure input/output queues and match result IDs to requests; this is not automatic routing or broadcast to producers. The separate retry schedule shown is Redis-style, not universal across transports.';details.append(note);}
  // Keep long answers available without pushing the diagram down the page.
  for(const p of [...card.children].filter(n=>n.tagName==='P'))details.append(p);
  if(details.children.length>1)card.append(details);

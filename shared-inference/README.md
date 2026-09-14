@@ -3,13 +3,24 @@
 Six interactive, code-grounded topics: architecture, batch submission and execution,
 priority, queues and overload, errors and retry, and control-plane objects.
 
-`index.html` is self-contained except for the 24 SVGs in `review-candidates/`.
+`index.html` is self-contained except for the 35 SVGs in `review-candidates/`.
 Keep the directory together when publishing. No build step or external library
 is required. Deployment proposals and authoring/review controls are excluded.
 
 These diagrams describe the audited implementations and optional configurations,
 not a claim that every release or deployment enables every feature. Priority
 does not by itself guarantee reserved capacity.
+
+Background applications can publish compatible inference messages without Batch
+Gateway. The architecture, queue-flow and async error views let you select a
+background result consumer separately from the batch integration. These are
+alternative configured collectors, not automatic routing or broadcast to producers.
+The queue symbols represent roles, not a requirement to share physical queues.
+The separate retry schedule depicts the Redis-style transport implementation.
+See the pinned [standalone producer and result subscriber example](https://github.com/llm-d/llm-d-async/blob/d17f472292fcf14a121b9b68f827c77adbd19d09/README.md).
+
+`node scripts/add-background-inference.cjs` reproducibly augments the checked-in
+diagram snapshots; run the bundle check after regeneration.
 
 ## Source baseline
 
