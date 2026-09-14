@@ -117,15 +117,15 @@
             } },
           { "id": "ch1-6-p1",  "label": "1.6 · Part 1", "title": "Inside InferenceObjective",
             "bridge": "The pool decides where a request goes. InferenceObjective decides which requests matter most.",
-            "lead": "What InferenceObjective declares, and how the Endpoint Picker turns a request header into a priority that ranks that request against the others in the same pool.",
+            "lead": "What an InferenceObjective declares, and how the Endpoint Picker reads the priority for a request from the objective named in the header.",
             "src": "01.6-part1-inside-inferenceobjective.mp4",
             "details": {
               "summary": "How InferenceObjective sets priority",
               "points": [
-                "InferenceObjective declares a pool reference and a priority integer, and nothing else.",
-                "The Endpoint Picker reads the objective from the request header, looks it up, and treats an unset priority as zero.",
-                "Priority ranks that request against the others in the same pool, so the number only means something beside its siblings.",
-                "Anything below zero is sheddable and gets dropped when the pool is full, which makes zero a boundary rather than a middle value."
+                "An InferenceObjective consists of a name, a pool, and a priority.",
+                "Each request selects one InferenceObjective: the x-llm-d-inference-objective header maps to the metadata.name.",
+                "The Endpoint Picker reads the InferenceObjective and acts on the priority; an unset priority is treated as 0.",
+                "The higher the value, the more critical the request. Negative values are sheddable, rejected under saturation. An InferencePool can serve many objectives."
               ]
             } },
           { "id": "ch1-k8s",    "label": "Reference", "title": "The Kubernetes objects behind llm-d",
