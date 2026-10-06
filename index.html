@@ -13,13 +13,12 @@
       <button class="theme-toggle" id="theme-toggle" type="button">Dark</button>
       <div class="hero-copy">
         <h1 id="site-title">Inference Engineering, Explained</h1>
-        <p id="site-subtitle">Learn how inference systems work, one animation at a time.</p>
       </div>
       <div class="hero-figure" id="hero-figure" aria-hidden="true"></div>
 </header>
   </div>
 
-  <main class="wrap" id="content"><section class="section" id="courses"><h2>Choose a course</h2><p class="blurb">Start with the foundations, or go straight to shared inference or flow control. Interactive diagrams and learners are linked inside each course.</p><div class="grid hub-courses" id="course-cards"></div></section><details class="explainer-library"><summary>More explainers</summary><p>Standalone videos on the platform and core concepts.</p><div id="reference-videos"></div></details></main>
+  <main class="wrap" id="content"><section class="section" id="courses"><h2>Choose a course</h2><div class="grid hub-courses" id="course-cards"></div></section></main>
   <script type="module" src="courses.js"></script>
 
   <script src="site.js"></script>
@@ -30,11 +29,8 @@
 
       document.title = data.title;
       document.getElementById('site-title').textContent = data.title;
-      document.getElementById('site-subtitle').textContent = 'Learn how inference systems work, one animation at a time.';
 
-      const main = document.getElementById('reference-videos');
-      (data.sections || []).forEach((section,i) => main.appendChild(sectionEl(section,resolver,i+1)));
-      observeReveals(main);
+
     })().catch((e) => {
       document.getElementById('site-title').textContent = 'Could not load chapters.json';
       console.error(e);

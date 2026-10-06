@@ -1,6 +1,6 @@
 # Published short courses
 
-This is one part of the Inference Engineering learning hub. Keep Flow control and Shared inference as distinct courses alongside llm-d foundations. The root hub is the single course selector; courses.json owns course names and routes. The interactive learners remain the maintained references.
+This is one part of the Inference Engineering learning hub. Keep Flow control and Shared inference as distinct courses alongside llm-d foundations and the Red Hat AI inference platform chapter. The root hub is the single course selector; courses.json owns course names and routes. The interactive learners remain the maintained references.
 
 Only published posts enter `lessons.json`. Drafts and planned lessons stay in the private content pipeline. Do not expose future chapters, placeholder players, or unpublished videos on this page.
 

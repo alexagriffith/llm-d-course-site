@@ -1,23 +1,37 @@
 [
   {
+    "id": "inference-fundamentals",
+    "title": "Inference fundamentals",
+    "href": "chapter.html?c=inference-fundamentals",
+    "description": "Inference architecture, the inference stack, GPU parallelism, CPU/GPU balance, and agents in production.",
+    "action": "Start course →"
+  },
+  {
     "id": "foundations",
     "title": "llm-d foundations",
     "href": "chapter.html?c=chapter-01",
     "description": "Start with request routing, KV cache reuse, and the Kubernetes objects that connect gateways to model servers.",
-    "action": "Start course \u2192"
+    "action": "Start course →"
   },
   {
     "id": "shared-inference",
     "title": "Shared inference",
     "href": "shorts/shared-inference.html",
     "description": "Follow live requests, batch jobs, and background applications from submission to result retrieval.",
-    "action": "Start course \u2192"
+    "action": "Start course →"
   },
   {
     "id": "flow-control",
     "title": "Flow control",
     "href": "shorts/flow-control.html",
     "description": "Explore shared capacity, admission, priority bands, fairness, and request ordering.",
-    "action": "Start course \u2192"
+    "action": "Start course →"
+  },
+  {
+    "id": "red-hat-ai-platform",
+    "title": "Red Hat AI inference platform",
+    "href": "chapter.html?c=red-hat-ai-platform",
+    "description": "A two-part walkthrough of the platform and what gets created when you deploy a model.",
+    "action": "Open chapter →"
   }
 ]

@@ -1,6 +1,5 @@
 {
   "title": "Inference Engineering, Explained",
-  "subtitle": "Animated inference explainers.",
   "note": "Set videoBase to your hosting root (a GitHub Releases download URL, a Drive folder, or a CDN). Each item's `src` is appended to it. Leave src as a full https:// URL to point an item somewhere else.",
   "videoBase": "https://github.com/alexagriffith/llm-d-course-site/releases/download/videos-v1",
   "course": {
@@ -11,21 +10,47 @@
         "id": "chapter-01",
         "number": "1",
         "title": "Chapter 1",
-        "summary": "",
-        "lead": "Start at the top and work down. Each part builds on the one before it, from how llm-d routes a request to the Kubernetes objects you apply to run it.",
         "groups": [
-          { "id": "intro",   "title": "Intro to llm-d",
-            "blurb": "How a request finds its way to a model server.",
-            "items": ["ch1"] },
-          { "id": "problem", "title": "The problem llm-d solves",
-            "blurb": "What goes wrong at scale, and the cache reuse that fixes it.",
-            "items": ["ch1-2", "ch1-3"] },
-          { "id": "blocks",  "title": "llm-d building blocks",
-            "blurb": "The Kubernetes objects you assemble to serve traffic.",
-            "items": ["ch1-4", "ch1-5", "ch1-5-p1", "ch1-5-p2", "ch1-6-p1", "ch1-k8s"] }
+          {
+            "id": "intro",
+            "title": "Intro to llm-d",
+            "items": [
+              "ch1"
+            ]
+          },
+          {
+            "id": "problem",
+            "title": "The problem llm-d solves",
+            "items": [
+              "ch1-2",
+              "ch1-3"
+            ]
+          },
+          {
+            "id": "blocks",
+            "title": "llm-d building blocks",
+            "items": [
+              "ch1-4",
+              "ch1-5",
+              "ch1-5-p1",
+              "ch1-5-p2",
+              "ch1-6-p1",
+              "ch1-k8s"
+            ]
+          },
+          {
+            "id": "flow-control",
+            "title": "Admission and queueing",
+            "items": [
+              "fc-epp"
+            ]
+          }
         ],
         "items": [
-          { "id": "ch1",        "label": "1.1", "title": "Intelligent routing with llm-d",
+          {
+            "id": "ch1",
+            "label": "1.1",
+            "title": "Intelligent routing with llm-d",
             "lead": "How a request finds a vLLM pod, and how reusing a cached prefix can reduce prefill work.",
             "src": "01-chapter-1.mp4",
             "details": {
@@ -36,9 +61,12 @@
                 "The Endpoint Picker applies the configured filters, scorers, and picker. In this example, the highest-scoring eligible pod wins.",
                 "A prefix-cache score favors a pod likely to hold a matching prefix. Reusing it can reduce prefill work; the selected policies decide how cache reuse is weighed against other signals."
               ]
-            } },
-          { "id": "ch1-2",      "label": "1.2", "title": "Managing LLM traffic at scale",
-            "bridge": "Routing gets a request to the right pod. Next, look inside that pod at what serves it.",
+            }
+          },
+          {
+            "id": "ch1-2",
+            "label": "1.2",
+            "title": "Managing LLM traffic at scale",
             "lead": "Inside a vLLM pod: model weights, the KV cache, and the waiting queue, and what happens when traffic climbs.",
             "src": "01.2-chapter.mp4",
             "details": {
@@ -49,9 +77,12 @@
                 "When work arrives faster than one pod can finish it, a second replica runs in parallel and builds its own cache.",
                 "A load balancer that does not consider prefix-cache state can send a request to a cold replica, even when another replica could reuse the prefix."
               ]
-            } },
-          { "id": "ch1-3",      "label": "1.3", "title": "Requests share long prefixes",
-            "bridge": "The pod reuses cache when it can. Next, see why requests share cache in the first place.",
+            }
+          },
+          {
+            "id": "ch1-3",
+            "label": "1.3",
+            "title": "Requests share long prefixes",
             "lead": "Why so many requests carry the same opening tokens, and how a shared prefix turns into cache you can reuse.",
             "src": "01.3-chapter.mp4",
             "details": {
@@ -62,9 +93,12 @@
                 "A pod can reuse its own cached prefixes without cache-aware routing. Sending a request to a different pod may require computing that prefix again.",
                 "Cache-aware routing favors endpoints likely to hold the prefix, alongside the other configured routing policies."
               ]
-            } },
-          { "id": "ch1-4",      "label": "1.4", "title": "The objects you kubectl apply",
-            "bridge": "That covers how llm-d serves a request. Next, the Kubernetes objects you apply to make it run.",
+            }
+          },
+          {
+            "id": "ch1-4",
+            "label": "1.4",
+            "title": "The objects you kubectl apply",
             "lead": "An overview of how Gateway, HTTPRoute, and InferencePool wire together into the thing that serves traffic.",
             "src": "01.4-overview-v2.mp4",
             "details": {
@@ -75,9 +109,12 @@
                 "The llm-d install adds the Endpoint Picker that picks a server, its Service, and the optional InferenceObjective that sets request priority.",
                 "The model server pods, labeled app=vllm, run the model on the GPU, so one address routes to many pods."
               ]
-            } },
-          { "id": "ch1-5",      "label": "1.5", "title": "Inside HTTPRoute and InferencePool",
-            "bridge": "You have seen the objects at a glance. Next, open up the two that route a request to the pods.",
+            }
+          },
+          {
+            "id": "ch1-5",
+            "label": "1.5",
+            "title": "Inside HTTPRoute and InferencePool",
             "lead": "What HTTPRoute and InferencePool each do, and how they hand a request from the URL path to the model server pods.",
             "src": "01.5-part1-httproute-inferencepool-deep.mp4",
             "details": {
@@ -88,9 +125,12 @@
                 "The pool's endpointPickerRef names the Endpoint Picker and the port it answers on.",
                 "The Endpoint Picker scores the endpoints for each request and returns the chosen endpoint address."
               ]
-            } },
-          { "id": "ch1-5-p1",   "label": "1.5 · Part 1", "title": "Inside HTTPRoute",
-            "bridge": "Now take each object on its own, starting with HTTPRoute.",
+            }
+          },
+          {
+            "id": "ch1-5-p1",
+            "label": "1.5 · Part 1",
+            "title": "Inside HTTPRoute",
             "lead": "A closer look at HTTPRoute on its own: how it matches a request by path prefix and headers and points it at a backend.",
             "src": "01.5-part1-into-inferencepool.mp4",
             "details": {
@@ -101,9 +141,12 @@
                 "The match handles only paths starting with /v1/chat/completions.",
                 "Its backendRefs name an InferencePool, so each matched request goes to an available model server pod."
               ]
-            } },
-          { "id": "ch1-5-p2",   "label": "1.5 · Part 2", "title": "Inside InferencePool",
-            "bridge": "HTTPRoute points at an InferencePool. Next, open up what that is.",
+            }
+          },
+          {
+            "id": "ch1-5-p2",
+            "label": "1.5 · Part 2",
+            "title": "Inside InferencePool",
             "lead": "What InferencePool declares, and how the Endpoint Picker routes a request to a ready pod using policies and live metrics like queue depth and cache use.",
             "src": "01.5-part2-inside-inferencepool.mp4",
             "details": {
@@ -114,9 +157,12 @@
                 "It scrapes queue depth and cache use from each endpoint and routes on policies plus those metrics.",
                 "The pool declares the members; the picker keeps the ready list."
               ]
-            } },
-          { "id": "ch1-6-p1",  "label": "1.6 · Part 1", "title": "Inside InferenceObjective",
-            "bridge": "InferencePool identifies the model server pods. InferenceObjective supplies a request priority.",
+            }
+          },
+          {
+            "id": "ch1-6-p1",
+            "label": "1.6 · Part 1",
+            "title": "Inside InferenceObjective",
             "lead": "What an InferenceObjective declares, and how the Endpoint Picker reads the priority for a request from the objective named in the header.",
             "src": "01.6-part1-inside-inferenceobjective.mp4",
             "details": {
@@ -127,8 +173,12 @@
                 "The Endpoint Picker resolves priority from the cached InferenceObjective; a missing objective or unset priority falls back to 0.",
                 "Higher values mean higher priority. Negative values mark sheddable work. With flow control off, legacy admission rejects negative-priority requests at saturation. With flow control on, requests can wait in a queue, subject to capacity limits and expiry. An InferencePool can serve many objectives."
               ]
-            } },
-          { "id": "ch1-k8s",    "label": "Reference", "title": "The Kubernetes objects behind llm-d",
+            }
+          },
+          {
+            "id": "ch1-k8s",
+            "label": "Reference",
+            "title": "The Kubernetes objects behind llm-d",
             "lead": "A reference pass over every object llm-d relies on and how they relate.",
             "src": "kubernetes-objects-behind-llm-d.mp4",
             "details": {
@@ -139,49 +189,114 @@
                 "The llm-d install runs the Endpoint Picker, which chooses an endpoint using configured policies. A Service lets the gateway reach the Endpoint Picker.",
                 "The LLM inference service holds the model server pods, labeled app=vllm, that run the model on the GPU."
               ]
-            } }
+            }
+          },
+          {
+            "id": "fc-epp",
+            "title": "Endpoint Picker flow control",
+            "src": "epp-flow-control.mp4",
+            "details": {
+              "summary": "How the Endpoint Picker paces requests",
+              "points": [
+                "The gateway asks the Endpoint Picker to choose an endpoint, then forwards the request to the selected model server.",
+                "In this utilization-detector example, reported queue depth and KV-cache use supply the saturation signal.",
+                "Flow control holds queued requests when pool saturation reaches their priority band’s dispatch ceiling. This can happen before every endpoint is saturated.",
+                "When the band can dispatch, a request proceeds to endpoint selection. Configured routing policies choose its destination; passing the dispatch gate does not guarantee immediate model execution."
+              ]
+            },
+            "lead": "How llm-d admits, queues, and paces requests under load."
+          }
+        ]
+      },
+      {
+        "id": "red-hat-ai-platform",
+        "title": "Red Hat AI inference platform",
+        "groups": [
+          {
+            "id": "platform-overview",
+            "title": "Part 1 — Inference platform",
+            "items": [
+              "rhaii-p1"
+            ]
+          },
+          {
+            "id": "platform-deployment",
+            "title": "Part 2 — Model deployment",
+            "items": [
+              "rhaii-p2"
+            ]
+          }
+        ],
+        "items": [
+          {
+            "id": "rhaii-p1",
+            "title": "Part 1",
+            "src": "rhaii-part1.mp4"
+          },
+          {
+            "id": "rhaii-p2",
+            "title": "Part 2",
+            "src": "rhaii-part2-web-15mb.mp4"
+          }
+        ]
+      },
+      {
+        "id": "inference-fundamentals",
+        "title": "Inference fundamentals",
+        "groups": [
+          {
+            "id": "architecture-serving",
+            "title": "Architecture and serving",
+            "items": [
+              "rhaii-arch",
+              "inf-stack"
+            ]
+          },
+          {
+            "id": "hardware-scaling",
+            "title": "Hardware and scaling",
+            "items": [
+              "gpu-par",
+              "cpu-gpu"
+            ]
+          },
+          {
+            "id": "production-applications",
+            "title": "Production applications",
+            "items": [
+              "agents"
+            ]
+          }
+        ],
+        "items": [
+          {
+            "id": "rhaii-arch",
+            "title": "Inference architecture",
+            "src": "inference-architecture.mp4"
+          },
+          {
+            "id": "inf-stack",
+            "title": "The inference stack",
+            "src": "inference-stack.mp4"
+          },
+          {
+            "id": "gpu-par",
+            "title": "GPU parallelism",
+            "src": "gpu-parallelism-final-aug17.mp4"
+          },
+          {
+            "id": "cpu-gpu",
+            "title": "The CPU-to-GPU ratio shift",
+            "src": "cpu-gpu-ratio-shift.mp4"
+          },
+          {
+            "id": "agents",
+            "title": "Agents in production",
+            "src": "agents-in-production.mp4"
+          }
         ]
       }
     ]
   },
-  "sections": [
-    {
-      "id": "rhaii",
-      "title": "Red Hat AI inference platform",
-      "blurb": "How the platform fits together.",
-      "items": [
-        { "id": "rhaii-p1",   "title": "Part 1",                           "src": "rhaii-part1.mp4" },
-        { "id": "rhaii-p2",   "title": "Part 2",                           "src": "rhaii-part2-web-15mb.mp4" }
-      ]
-    },
-    {
-      "id": "flow-control",
-      "title": "Flow control",
-      "blurb": "How llm-d admits, queues, and paces requests under load.",
-      "items": [
-        { "id": "fc-epp",     "title": "Endpoint Picker flow control",     "src": "epp-flow-control.mp4",
-          "details": {
-            "summary": "How the Endpoint Picker paces requests",
-            "points": [
-              "The gateway asks the Endpoint Picker to choose an endpoint, then forwards the request to the selected model server.",
-              "In this utilization-detector example, reported queue depth and KV-cache use supply the saturation signal.",
-              "Flow control holds queued requests when pool saturation reaches their priority band’s dispatch ceiling. This can happen before every endpoint is saturated.",
-              "When the band can dispatch, a request proceeds to endpoint selection. Configured routing policies choose its destination; passing the dispatch gate does not guarantee immediate model execution."
-            ]
-          } }
-      ]
-    },
-    {
-      "id": "concepts",
-      "title": "Core concepts",
-      "blurb": "Standalone explainers, in no particular order.",
-      "items": [
-        { "id": "rhaii-arch", "title": "Inference architecture",           "src": "inference-architecture.mp4" },
-        { "id": "gpu-par",    "title": "GPU parallelism",                  "src": "gpu-parallelism-final-aug17.mp4" },
-        { "id": "inf-stack",  "title": "The inference stack",              "src": "inference-stack.mp4" },
-        { "id": "agents",     "title": "Agents in production",             "src": "agents-in-production.mp4" },
-        { "id": "cpu-gpu",    "title": "The CPU-to-GPU ratio shift",       "src": "cpu-gpu-ratio-shift.mp4" }
-      ]
-    }
-  ]
+  "sections": []
 }

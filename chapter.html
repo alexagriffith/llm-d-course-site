@@ -13,7 +13,7 @@
       <div class="hero-copy">
         <a class="back-link" href="index.html">← All courses</a>
         <h1 id="chapter-title">Loading…</h1>
-        <p id="chapter-summary"></p><nav class="course-navigation" data-course-nav="foundations" aria-label="Courses"></nav>
+        <nav class="course-navigation" data-course-nav="chapter" aria-label="Courses"></nav>
       </div>
       <div class="hero-figure" id="hero-figure" aria-hidden="true"></div>
     </header>
@@ -40,7 +40,6 @@
       const courseTitle=ch.id==='chapter-01'?'llm-d foundations':ch.title;
       document.title = courseTitle + ' · ' + data.title;
       document.getElementById('chapter-title').textContent = courseTitle;
-      document.getElementById('chapter-summary').textContent = ch.lead || ch.summary || '';
 
       // Render the chapter as an ordered, embedded walkthrough.
       const main = document.getElementById('content');
