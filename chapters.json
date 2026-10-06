@@ -26,15 +26,15 @@
         ],
         "items": [
           { "id": "ch1",        "label": "1.1", "title": "Intelligent routing with llm-d",
-            "lead": "How a request finds a vLLM pod, and why routing to the pod that already holds the right KV cache is faster.",
+            "lead": "How a request finds a vLLM pod, and how reusing a cached prefix can reduce prefill work.",
             "src": "01-chapter-1.mp4",
             "details": {
               "summary": "How llm-d picks a pod",
               "points": [
                 "A vLLM pod holds the model weights, a KV cache of work it has already computed, and a waiting queue for requests it cannot run yet.",
                 "When traffic rises against one pod, the queue fills and the cache alone cannot keep up, so the work spreads across several pods.",
-                "The Endpoint Picker filters the pods, scores each one, and the highest total wins.",
-                "The score favors a pod that already holds the right cache, so that pod serves the request faster."
+                "The Endpoint Picker applies the configured filters, scorers, and picker. In this example, the highest-scoring eligible pod wins.",
+                "A prefix-cache score favors a pod likely to hold a matching prefix. Reusing it can reduce prefill work; the selected policies decide how cache reuse is weighed against other signals."
               ]
             } },
           { "id": "ch1-2",      "label": "1.2", "title": "Managing LLM traffic at scale",
@@ -44,10 +44,10 @@
             "details": {
               "summary": "Why one pod is not enough",
               "points": [
-                "The pod keeps what it has already computed, so a repeat prompt starts warm from the KV cache.",
-                "The cache grows with every token, and most of what arrives has already been computed as a shared prefix.",
+                "With prefix caching enabled, a pod can reuse a matching prefix while those cache blocks remain available.",
+                "Requests can share cached prefixes, such as the same system prompt. How much work can be reused depends on the workload and which blocks are still cached.",
                 "When work arrives faster than one pod can finish it, a second replica runs in parallel and builds its own cache.",
-                "A cache-blind load balancer sees only connection counts, so it can send a request to a cold replica that recomputes the prefill."
+                "A load balancer that does not consider prefix-cache state can send a request to a cold replica, even when another replica could reuse the prefix."
               ]
             } },
           { "id": "ch1-3",      "label": "1.3", "title": "Requests share long prefixes",
@@ -59,8 +59,8 @@
               "points": [
                 "Requests carry the same shared instructions ahead of the user's own question, so they share a long opening prefix.",
                 "That prefix hashes into blocks the pod can look up in its KV cache index.",
-                "Without cache-aware routing, every pod prefills the same prefix from scratch each time.",
-                "llm-d sends the request to the pod that already holds the prefix, which cuts cost and latency."
+                "A pod can reuse its own cached prefixes without cache-aware routing. Sending a request to a different pod may require computing that prefix again.",
+                "Cache-aware routing favors endpoints likely to hold the prefix, alongside the other configured routing policies."
               ]
             } },
           { "id": "ch1-4",      "label": "1.4", "title": "The objects you kubectl apply",
@@ -116,16 +116,16 @@
               ]
             } },
           { "id": "ch1-6-p1",  "label": "1.6 · Part 1", "title": "Inside InferenceObjective",
-            "bridge": "The pool decides where a request goes. InferenceObjective decides which requests matter most.",
+            "bridge": "InferencePool identifies the model server pods. InferenceObjective supplies a request priority.",
             "lead": "What an InferenceObjective declares, and how the Endpoint Picker reads the priority for a request from the objective named in the header.",
             "src": "01.6-part1-inside-inferenceobjective.mp4",
             "details": {
               "summary": "How InferenceObjective sets priority",
               "points": [
                 "An InferenceObjective consists of a name, a pool, and a priority.",
-                "Each request selects one InferenceObjective: the x-llm-d-inference-objective header maps to the metadata.name.",
-                "The Endpoint Picker reads the InferenceObjective and acts on the priority; an unset priority is treated as 0.",
-                "The higher the value, the more critical the request. Negative values are sheddable, rejected under saturation. An InferencePool can serve many objectives."
+                "The x-llm-d-inference-objective header can name an InferenceObjective for the request.",
+                "The Endpoint Picker resolves priority from the cached InferenceObjective; a missing objective or unset priority falls back to 0.",
+                "Higher values mean higher priority. Negative values mark sheddable work. With flow control off, legacy admission rejects negative-priority requests at saturation. With flow control on, requests can wait in a queue, subject to capacity limits and expiry. An InferencePool can serve many objectives."
               ]
             } },
           { "id": "ch1-k8s",    "label": "Reference", "title": "The Kubernetes objects behind llm-d",
@@ -135,8 +135,8 @@
               "summary": "Every object, in one pass",
               "points": [
                 "Gateway API holds the Gateway where every request arrives and the HTTPRoute that sends /v1/chat/completions to the pool.",
-                "The Gateway API Inference Extension holds the InferencePool, the group of servers to route to, and the InferenceObjective that marks which requests matter most.",
-                "The llm-d install holds the Endpoint Picker pod that picks the least busy server and the Service that gives the pool its address.",
+                "Gateway API Inference Extension supplies InferencePool, which identifies the model server pods. InferenceObjective belongs to llm-d (llm-d.ai/v1alpha2) and supplies request priority.",
+                "The llm-d install runs the Endpoint Picker, which chooses an endpoint using configured policies. A Service lets the gateway reach the Endpoint Picker.",
                 "The LLM inference service holds the model server pods, labeled app=vllm, that run the model on the GPU."
               ]
             } }
@@ -163,10 +163,10 @@
           "details": {
             "summary": "How the Endpoint Picker paces requests",
             "points": [
-              "The Endpoint Picker sits between the Gateway and the model server pods, deciding which endpoint each request goes to.",
-              "It reads live signals from every pod, queue depth and cache use, so it can tell a busy endpoint from a ready one.",
-              "When every endpoint is saturated, flow control holds the request rather than piling it onto a full queue.",
-              "As capacity frees up, held requests are released to the endpoint that can serve them fastest."
+              "The gateway asks the Endpoint Picker to choose an endpoint, then forwards the request to the selected model server.",
+              "In this utilization-detector example, reported queue depth and KV-cache use supply the saturation signal.",
+              "Flow control holds queued requests when pool saturation reaches their priority band’s dispatch ceiling. This can happen before every endpoint is saturated.",
+              "When the band can dispatch, a request proceeds to endpoint selection. Configured routing policies choose its destination; passing the dispatch gate does not guarantee immediate model execution."
             ]
           } }
       ]
