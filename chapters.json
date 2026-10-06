@@ -211,31 +211,15 @@
       {
         "id": "red-hat-ai-platform",
         "title": "Red Hat AI inference platform",
-        "groups": [
-          {
-            "id": "platform-overview",
-            "title": "Part 1 — Inference platform",
-            "items": [
-              "rhaii-p1"
-            ]
-          },
-          {
-            "id": "platform-deployment",
-            "title": "Part 2 — Model deployment",
-            "items": [
-              "rhaii-p2"
-            ]
-          }
-        ],
         "items": [
           {
             "id": "rhaii-p1",
-            "title": "Part 1",
+            "title": "Part 1 — Inference platform",
             "src": "rhaii-part1.mp4"
           },
           {
             "id": "rhaii-p2",
-            "title": "Part 2",
+            "title": "Part 2 — Model deployment",
             "src": "rhaii-part2-web-15mb.mp4"
           }
         ]
