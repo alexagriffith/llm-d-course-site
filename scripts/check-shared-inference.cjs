@@ -56,7 +56,9 @@ for(const name of expected){
  assert(!/IBM|Behrendt|\/Users\/|<script|<foreignObject/i.test(svg),name);
  if(name.startsWith('architecture-results'))assert(svg.includes('M1000 351 V699 Q1000 711 988 711 H915'),name);
 }
-assert(fs.readFileSync(path.join(root,'index.html'),'utf8').includes('href="shared-inference/"'));
+const catalog=JSON.parse(fs.readFileSync(path.join(root,'courses.json'),'utf8'));
+assert(catalog.some(c=>c.id==='shared-inference'&&c.href==='shorts/shared-inference.html'));
+assert(fs.readFileSync(path.join(root,'shorts/shared-inference.html'),'utf8').includes('href="../shared-inference/"'));
 console.log(`PASS: six topics, ${expected.length} SVGs, configured background collectors, one-elbow response, stable slots/pager. Browser rendering remains a separate check.`);
 
 // Walkthrough assets are part of the public bundle, not a local preview dependency.

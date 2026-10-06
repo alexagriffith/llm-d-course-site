@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Chapter · Inference Engineering, Explained</title>
   <link rel="stylesheet" href="style.css" />
-</head>
+<link rel="stylesheet" href="course-navigation.css"></head>
 <body>
   <div class="wrap">
     <header class="hero hero--split">
       <button class="theme-toggle" id="theme-toggle" type="button">Dark</button>
       <div class="hero-copy">
-        <a class="back-link" href="index.html">← All animations</a>
+        <a class="back-link" href="index.html">← All courses</a>
         <h1 id="chapter-title">Loading…</h1>
-        <p id="chapter-summary"></p>
+        <p id="chapter-summary"></p><nav class="course-navigation" data-course-nav="foundations" aria-label="Courses"></nav>
       </div>
       <div class="hero-figure" id="hero-figure" aria-hidden="true"></div>
     </header>
@@ -37,8 +37,9 @@
         return;
       }
 
-      document.title = ch.title + ' · ' + data.title;
-      document.getElementById('chapter-title').textContent = ch.title;
+      const courseTitle=ch.id==='chapter-01'?'llm-d foundations':ch.title;
+      document.title = courseTitle + ' · ' + data.title;
+      document.getElementById('chapter-title').textContent = courseTitle;
       document.getElementById('chapter-summary').textContent = ch.lead || ch.summary || '';
 
       // Render the chapter as an ordered, embedded walkthrough.
@@ -85,5 +86,5 @@
       mount.removeAttribute('aria-hidden');
     })();
   </script>
-</body>
+<script type="module" src="courses.js"></script></body>
 </html>

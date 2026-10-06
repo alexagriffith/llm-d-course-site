@@ -22,7 +22,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #93
 .candidate-tools{font-size:13px;text-align:right;margin:8px 0}.explanation{border-top:1px solid #364f67;padding-top:12px;margin-top:12px}.explanation summary{cursor:pointer;font-size:14px;color:#b9cad8}.explanation p{margin-top:12px}
 .view-pager{display:flex;justify-content:space-between;align-items:center;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(1344px,calc(100% - 28px));background:#07111d;z-index:10;padding:12px 0;border-top:1px solid #364f67}.view-pager span{font-size:13px;color:#b9cad8}body{padding-bottom:80px}
 @media(max-width:700px){main{padding:18px 14px}h1{font-size:23px}#view-nav{gap:4px 12px}.flow-modes button{padding:8px;font-size:13px}.view>h2{height:54px}.view>.cols{height:64px}.view-controls{height:180px}}
-</style></head><body><main><h1>Shared inference</h1><nav id="view-nav" aria-label="Inference topics"></nav><div id="views"></div><script>
+</style></head><body><main><p><a href="../#courses">← All courses</a> · <a href="../shorts/shared-inference.html">Shared inference video course →</a></p><h1>Shared inference — interactive diagrams</h1><nav id="view-nav" aria-label="Inference topics"></nav><div id="views"></div><script>
 const views=[{"id":"architecture","title":"Shared architecture","question":"Where do live, direct batch, and queued requests enter the shared serving path?"},{"id":"batch","title":"batch API → inference","question":"Where does the batch API call terminate, and how does a job become model requests?"},{"id":"priority","title":"Priority and endpoint selection","question":"Who assigns priority, and how does Endpoint Picker use it?"},{"id":"queues","title":"Queues and overload","question":"What waits where, and what protection happens before dispatch?"},{"id":"retry","title":"Errors, results and retry","question":"Who sends the error, retains the request, and makes the next attempt?"},{"id":"objects","title":"Control-plane objects","question":"Which objects configure the runtime components?"}];
 for(const v of views){
  const id=v.id,card=document.createElement('section');card.id=id;card.className='view';
@@ -153,4 +153,4 @@ window.addEventListener('hashchange',selectView);selectView();
 
 // Hash navigation must not change the shared page origin between topics.
 window.addEventListener('hashchange',()=>window.scrollTo(0,0));window.scrollTo(0,0);
-</script><script src="learner-animations.js"></script></main></body></html><p><a href="../shorts/shared-inference.html">Step-by-step animation course →</a> · <a href="policy-lab/">Compare flow-control policies →</a></p>
+</script><script src="learner-animations.js"></script><p><a href="policy-lab/">Compare flow-control policies →</a></p></main></body></html>

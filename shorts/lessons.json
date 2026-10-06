@@ -16,7 +16,9 @@
         "url": "https://x.com/alexa_griffith_/status/2100347482567852216",
         "verifiedOn": "2026-10-06"
       },
-      "videoSha256": "91bfb070fb30df8cde2554504ed726102b988ead91bc0828ed274385a51f06b6"
+      "videoSha256": "91bfb070fb30df8cde2554504ed726102b988ead91bc0828ed274385a51f06b6",
+      "width": 1440,
+      "height": 810
     },
     {
       "id": "flow-capacity",
@@ -33,7 +35,9 @@
         "url": "https://x.com/alexa_griffith_/status/2100705060493623689",
         "verifiedOn": "2026-10-06"
       },
-      "videoSha256": "5044cb966a577af17ce4b4211decd0123252cb6597a4e963be7733cc2049d613"
+      "videoSha256": "5044cb966a577af17ce4b4211decd0123252cb6597a4e963be7733cc2049d613",
+      "width": 1440,
+      "height": 810
     },
     {
       "id": "flow-burst-pressure",
@@ -50,7 +54,9 @@
         "url": "https://x.com/alexa_griffith_/status/2100986276677628282",
         "verifiedOn": "2026-10-06"
       },
-      "videoSha256": "ab4ec0e920a6ccc91683079e72583af780fd34b5457de18e39bef086b859c53a"
+      "videoSha256": "ab4ec0e920a6ccc91683079e72583af780fd34b5457de18e39bef086b859c53a",
+      "width": 1440,
+      "height": 810
     },
     {
       "id": "flow-threshold",
@@ -67,7 +73,9 @@
         "url": "https://x.com/alexa_griffith_/status/2102615604439961751",
         "verifiedOn": "2026-10-06"
       },
-      "videoSha256": "0381c9dfd5ea9172dd4ce6a538eca2d48d48c1f836a520aa1aa1d0c13d244225"
+      "videoSha256": "0381c9dfd5ea9172dd4ce6a538eca2d48d48c1f836a520aa1aa1d0c13d244225",
+      "width": 1440,
+      "height": 810
     },
     {
       "id": "inference-01-architecture",
@@ -84,7 +92,9 @@
         "url": "https://x.com/alexa_griffith_/status/2102612334099177786",
         "verifiedOn": "2026-10-06"
       },
-      "videoSha256": "a9328e24a7b372f35865eaed45ca382e0786188201fa616b4a0bfb60b1fef062"
+      "videoSha256": "a9328e24a7b372f35865eaed45ca382e0786188201fa616b4a0bfb60b1fef062",
+      "width": 1440,
+      "height": 1080
     },
     {
       "id": "inference-02-batch",
@@ -101,7 +111,9 @@
         "url": "https://x.com/alexa_griffith_/status/2105022507724001598",
         "verifiedOn": "2026-10-06"
       },
-      "videoSha256": "b9f48f6abbb7936ee07990f4269ea3e3cb42747d4123b3de94c2dd7c27d420e1"
+      "videoSha256": "b9f48f6abbb7936ee07990f4269ea3e3cb42747d4123b3de94c2dd7c27d420e1",
+      "width": 1440,
+      "height": 1080
     },
     {
       "id": "inference-03-priority",
@@ -118,7 +130,9 @@
         "url": "https://x.com/alexa_griffith_/status/2107517350803112091",
         "verifiedOn": "2026-10-06"
       },
-      "videoSha256": "854c94a9b947278cf0db72e58c9afb6e163fa7a6a9abb1a7dfeeb3a6258c0139"
+      "videoSha256": "854c94a9b947278cf0db72e58c9afb6e163fa7a6a9abb1a7dfeeb3a6258c0139",
+      "width": 1440,
+      "height": 1080
     },
     {
       "id": "flow-policy",
@@ -135,7 +149,9 @@
         "url": "https://x.com/alexa_griffith_/status/2104973723816124417",
         "verifiedOn": "2026-10-06"
       },
-      "videoSha256": "1907ef5140af28467cfd1826a5b4c7085bf76343c9b65638023d17a58d3bee21"
+      "videoSha256": "1907ef5140af28467cfd1826a5b4c7085bf76343c9b65638023d17a58d3bee21",
+      "width": 1000,
+      "height": 650
     },
     {
       "id": "flow-fairness-intro",
@@ -152,7 +168,9 @@
         "url": "https://x.com/alexa_griffith_/status/2107556891177980246",
         "verifiedOn": "2026-10-06"
       },
-      "videoSha256": "2a8c8f0e05c6b39fee4dbdf4c6a9d6f3a692480278f11cec6dd04e5fa585680b"
+      "videoSha256": "2a8c8f0e05c6b39fee4dbdf4c6a9d6f3a692480278f11cec6dd04e5fa585680b",
+      "width": 1000,
+      "height": 700
     }
   ],
   "policySource": "llm-d-router d4b8afd3"

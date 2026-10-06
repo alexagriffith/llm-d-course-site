@@ -12,15 +12,15 @@
     <header class="hero hero--split">
       <button class="theme-toggle" id="theme-toggle" type="button">Dark</button>
       <div class="hero-copy">
-        <h1 id="site-title">Loading…</h1>
-        <p id="site-subtitle"></p>
+        <h1 id="site-title">Inference Engineering, Explained</h1>
+        <p id="site-subtitle">Learn how inference systems work, one animation at a time.</p>
       </div>
       <div class="hero-figure" id="hero-figure" aria-hidden="true"></div>
-    <p><a href="shorts/">Short animation courses: flow control and shared inference →</a></p>
 </header>
   </div>
 
-  <main class="wrap" id="content"></main>
+  <main class="wrap" id="content"><section class="section" id="courses"><h2>Choose a course</h2><p class="blurb">Start with the foundations, or go straight to shared inference or flow control. Interactive diagrams and learners are linked inside each course.</p><div class="grid hub-courses" id="course-cards"></div></section><details class="explainer-library"><summary>More explainers</summary><p>Standalone videos on the platform and core concepts.</p><div id="reference-videos"></div></details></main>
+  <script type="module" src="courses.js"></script>
 
   <script src="site.js"></script>
   <script>
@@ -30,79 +30,10 @@
 
       document.title = data.title;
       document.getElementById('site-title').textContent = data.title;
-      document.getElementById('site-subtitle').textContent = data.subtitle || '';
+      document.getElementById('site-subtitle').textContent = 'Learn how inference systems work, one animation at a time.';
 
-      const main = document.getElementById('content');
-      let num = 0;
-
-      // Course: a section of chapter link-cards, one per chapter.
-      if (data.course && data.course.chapters && data.course.chapters.length) {
-        const sec = document.createElement('section');
-        sec.className = 'section';
-        sec.id = data.course.id;
-
-        num += 1;
-        const eyebrow = document.createElement('div');
-        eyebrow.className = 'section-num';
-        eyebrow.appendChild(isoGlyphSVG());
-        const lbl = document.createElement('span');
-        lbl.textContent = 'Section ' + String(num).padStart(2, '0');
-        eyebrow.appendChild(lbl);
-        sec.appendChild(eyebrow);
-
-        const h2 = document.createElement('h2');
-        h2.textContent = data.course.title;
-        sec.appendChild(h2);
-
-        const grid = document.createElement('div');
-        grid.className = 'grid';
-
-        data.course.chapters.forEach((ch) => {
-          const a = document.createElement('a');
-          a.className = 'chapter-card reveal';
-          a.href = 'chapter.html?c=' + encodeURIComponent(ch.id);
-
-          const kicker = document.createElement('div');
-          kicker.className = 'chapter-kicker';
-          kicker.textContent = 'CHAPTER ' + ch.number;
-          a.appendChild(kicker);
-
-          const t = document.createElement('div');
-          t.className = 'chapter-title';
-          t.textContent = ch.title;
-          a.appendChild(t);
-
-          if (ch.summary) {
-            const s = document.createElement('p');
-            s.className = 'chapter-summary';
-            s.textContent = ch.summary;
-            a.appendChild(s);
-          }
-
-          grid.appendChild(a);
-        });
-
-        sec.appendChild(grid);
-        main.appendChild(sec);
-      }
-
-      // Other sections play inline.
-      (data.sections || []).forEach((section) => main.appendChild(sectionEl(section, resolver, ++num)));
-
-      const shared = sectionEl({
-        id: 'shared-inference',
-        title: 'Shared Inference',
-        blurb: 'Explore live and batch requests through a shared inference pool.',
-        items: []
-      }, resolver, ++num);
-      shared.querySelector('.grid').innerHTML = `
-        <a class="chapter-card reveal" href="shared-inference/">
-          <div class="chapter-kicker">INTERACTIVE DIAGRAMS</div>
-          <div class="chapter-title">Explore Shared Inference →</div>
-          <p class="chapter-summary">Architecture, batch processing, priority, queues, retries, and control-plane objects.</p>
-        </a>`;
-      main.appendChild(shared);
-
+      const main = document.getElementById('reference-videos');
+      (data.sections || []).forEach((section,i) => main.appendChild(sectionEl(section,resolver,i+1)));
       observeReveals(main);
     })().catch((e) => {
       document.getElementById('site-title').textContent = 'Could not load chapters.json';
