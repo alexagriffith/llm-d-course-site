@@ -1,0 +1,159 @@
+{
+  "videoBase": "https://github.com/alexagriffith/llm-d-course-site/releases/download/short-lessons-20261006/",
+  "lessons": [
+    {
+      "id": "flow-overview",
+      "title": "Overview",
+      "group": "Flow control foundations",
+      "body": "A quick look at the interactive learner for llm-d flow control and shared inference.",
+      "post": "I made an interactive learner to explain @_llm_d_'s flow control feature for shared inference.\n\nTry it yourself: https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-0",
+      "src": "flow-overview.mp4",
+      "poster": "posters/flow-overview.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-0",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2100347482567852216",
+        "verifiedOn": "2026-10-06"
+      },
+      "videoSha256": "91bfb070fb30df8cde2554504ed726102b988ead91bc0828ed274385a51f06b6"
+    },
+    {
+      "id": "flow-capacity",
+      "title": "Capacity utilization",
+      "group": "Flow control foundations",
+      "body": "Here’s the same traffic in separate GPU reservations and in a shared pool. Sharing lets tenants use capacity that would otherwise sit idle.",
+      "post": "llm-d flow control interactive learner, chapter 1: capacity utilization.\n\nHere’s the same traffic in separate tenant-GPU reservations versus a shared pool. Sharing lets tenants use capacity that would otherwise sit idle.\n\nhttps://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-0",
+      "src": "flow-capacity.mp4",
+      "poster": "posters/flow-capacity.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-0",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2100705060493623689",
+        "verifiedOn": "2026-10-06"
+      },
+      "videoSha256": "5044cb966a577af17ce4b4211decd0123252cb6597a4e963be7733cc2049d613"
+    },
+    {
+      "id": "flow-burst-pressure",
+      "title": "Burst pressure",
+      "group": "Flow control foundations",
+      "body": "A GPU pool can have spare capacity on average and still run out during a burst. Requests queue when demand exceeds what the pool can serve.",
+      "post": "llm-d flow control, chapter 2: shared inference under burst pressure.\n\nA GPU pool can have spare capacity on average and still run out during a traffic burst. With @_llm_d_ flow control enabled, excess requests are queued until capacity becomes available.\n\nhttps://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-1",
+      "src": "flow-burst-pressure.mp4",
+      "poster": "posters/flow-burst-pressure.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-1",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2100986276677628282",
+        "verifiedOn": "2026-10-06"
+      },
+      "videoSha256": "ab4ec0e920a6ccc91683079e72583af780fd34b5457de18e39bef086b859c53a"
+    },
+    {
+      "id": "flow-threshold",
+      "title": "Where control starts",
+      "group": "Flow control foundations",
+      "body": "Throughput can plateau while latency keeps rising. A load test helps choose an admission threshold for the model and workload.",
+      "post": "Chapter 3: where control starts\n\nThroughput can plateau while latency keeps rising. A load test helps choose an admission threshold for the model and workload.\n\nhttps://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-2",
+      "src": "flow-threshold.mp4",
+      "poster": "posters/flow-threshold.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-2",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2102615604439961751",
+        "verifiedOn": "2026-10-06"
+      },
+      "videoSha256": "0381c9dfd5ea9172dd4ce6a538eca2d48d48c1f836a520aa1aa1d0c13d244225"
+    },
+    {
+      "id": "inference-01-architecture",
+      "title": "Shared architecture",
+      "group": "Shared inference paths",
+      "body": "How live requests, batch jobs, and background apps reach the same inference pool in llm-d.",
+      "post": "How live requests, batch jobs, and background apps reach the same inference pool in llm-d.\n\nTry it yourself: https://alexagriffith.github.io/llm-d-course-site/shared-inference/#architecture",
+      "src": "inference-01-architecture.mp4",
+      "poster": "posters/inference-01-architecture.jpg",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/shared-inference/#architecture",
+      "animation": "../shared-inference/recording-view/architecture-demo.html?embed=1",
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2102612334099177786",
+        "verifiedOn": "2026-10-06"
+      },
+      "videoSha256": "a9328e24a7b372f35865eaed45ca382e0786188201fa616b4a0bfb60b1fef062"
+    },
+    {
+      "id": "inference-02-batch",
+      "title": "Batch API",
+      "group": "Shared inference paths",
+      "body": "How a batch job moves through llm-d, from uploading the input file to downloading the results.",
+      "post": "How a batch job moves through llm-d, from uploading the input file to downloading the results.\n\nTry it yourself: https://alexagriffith.github.io/llm-d-course-site/shared-inference/#batch",
+      "src": "inference-02-batch.mp4",
+      "poster": "posters/inference-02-batch.jpg",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/shared-inference/#batch",
+      "animation": "../shared-inference/recording-view/batch-demo.html?embed=1",
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2105022507724001598",
+        "verifiedOn": "2026-10-06"
+      },
+      "videoSha256": "b9f48f6abbb7936ee07990f4269ea3e3cb42747d4123b3de94c2dd7c27d420e1"
+    },
+    {
+      "id": "inference-03-priority",
+      "title": "Priority and endpoint selection",
+      "group": "Shared inference paths",
+      "body": "How llm-d looks up a request’s priority and selects a model server to handle it.",
+      "post": "How llm-d looks up a request’s priority and selects a model server to handle it.\n\nTry it yourself: https://alexagriffith.github.io/llm-d-course-site/shared-inference/#priority",
+      "src": "inference-03-priority.mp4",
+      "poster": "posters/inference-03-priority.jpg",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/shared-inference/#priority",
+      "animation": "../shared-inference/recording-view/priority-demo.html?embed=1",
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2107517350803112091",
+        "verifiedOn": "2026-10-06"
+      },
+      "videoSha256": "854c94a9b947278cf0db72e58c9afb6e163fa7a6a9abb1a7dfeeb3a6258c0139"
+    },
+    {
+      "id": "flow-policy",
+      "title": "Shared traffic needs policies",
+      "group": "Flow control foundations",
+      "body": "Premium, standard, and batch requests share one pool. A lower admission ceiling for batch leaves headroom for higher-priority traffic. It does not preempt already-running jobs or guarantee latency.",
+      "post": "llm-d flow control, chapter 4: shared traffic needs policies.\n\nPremium, standard, and batch requests share one pool. Admission is decided by the priority and fairness policies. For example, we can prevent starvation of premium traffic from long-running batch jobs by setting a lower admission ceiling for batch queues.\n\nhttps://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-3",
+      "src": "flow-policy.mp4",
+      "poster": "posters/flow-policy.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-3",
+      "animation": "../flow-control-recordings/policy-demo.html",
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2104973723816124417",
+        "verifiedOn": "2026-10-06"
+      },
+      "videoSha256": "1907ef5140af28467cfd1826a5b4c7085bf76343c9b65638023d17a58d3bee21"
+    },
+    {
+      "id": "flow-fairness-intro",
+      "title": "Fairness within a priority band",
+      "group": "Flow control foundations",
+      "body": "Fairness policies choose a flow within the band: Round Robin, Global Strict, or Program-Aware. Round Robin takes turns across active flows. Global Strict compares queue heads using the ordering policy.",
+      "post": "llm-d flow control, chapter 5: fairness within a priority band.\n\nFairness policies choose a flow within the band: Round Robin, Global Strict, or Program-Aware. Round Robin takes turns across active flows. Global Strict compares queue heads using the ordering policy.\n\nOrdering policies rank requests within each flow’s queue. Options are First-Come, First-Served (FCFS), Earliest Deadline First (EDF), or SLO Deadline.\n\nThis animation shows FCFS with Round Robin and Global Strict fairness policies.\n\nhttps://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-4",
+      "src": "flow-fairness-intro.mp4",
+      "poster": "posters/flow-fairness-intro.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-4",
+      "animation": "../shared-inference/policy-lab/?embed=1",
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2107556891177980246",
+        "verifiedOn": "2026-10-06"
+      },
+      "videoSha256": "2a8c8f0e05c6b39fee4dbdf4c6a9d6f3a692480278f11cec6dd04e5fa585680b"
+    }
+  ],
+  "policySource": "llm-d-router d4b8afd3"
+}
