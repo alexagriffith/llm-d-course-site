@@ -1,4 +1,5 @@
 // Idempotent augmentation of the existing, versioned SVG snapshots.
+require('./update-shared-inference-semantics.cjs');
 const fs=require('node:fs'), path=require('node:path');
 const dir=path.resolve(__dirname,'../shared-inference/review-candidates');
 const node='<g id="background-application"><rect class="box box-batch" x="75" y="675" width="230" height="72" rx="10"/><text class="title" x="190" y="711">Background application</text></g>';

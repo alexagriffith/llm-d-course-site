@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="en" data-demo="batch"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Batch inference · dedicated demo</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0b121c;color:#edf4fb}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-content:center;gap:12px}canvas{display:block;width:min(96vw,calc((100vh - 88px)*4/3));height:auto;aspect-ratio:4/3}nav{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px}button,a{font:inherit;background:#152b40;border:1px solid #49677f;color:inherit;border-radius:6px;padding:9px 14px}button:disabled{opacity:.5}a[hidden]{display:none}output{font-size:14px;color:#aec7dd}button:focus-visible,a:focus-visible{outline:3px solid #80c4ff}
+</style></head><body>
+<canvas id="stage" width="1440" height="1080" role="img" aria-label="Batch input, three inference exchanges, and output retrieval"></canvas>
+<nav aria-label="Demo playback"><button id="play" disabled>Play demo</button><button id="pause" disabled>Pause</button><button id="next" disabled>Next scene</button><button id="focus">Preview midpoint</button><button id="frame">Save frame</button><button id="export" disabled>Export video</button><button id="export-frames" disabled>Export frame sequence</button><a id="download" hidden download="01-architecture-continuous-v2.webm">Download video</a><output id="status" aria-live="polite">Loading diagrams…</output></nav>
+<script src="architecture-demo.js"></script></body></html>
