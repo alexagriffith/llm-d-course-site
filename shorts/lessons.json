@@ -171,6 +171,25 @@
       "videoSha256": "2a8c8f0e05c6b39fee4dbdf4c6a9d6f3a692480278f11cec6dd04e5fa585680b",
       "width": 1000,
       "height": 700
+    },
+    {
+      "id": "flow-ordering",
+      "title": "Request ordering",
+      "group": "Flow control foundations",
+      "body": "Compare First-Come, First-Served (FCFS) and Earliest Deadline First (EDF) within each queue, with Global Strict comparing queue heads across flows in the same priority band.",
+      "post": "llm-d flow control, chapter 5 continued: request ordering.\n\nOrdering (within each queue):\n(1) First come, first served (FCFS): Requests go in arrival order.\n(2)  Earliest deadline first (EDF): Requests with the soonest deadline go first.\n\nEDF calculates each deadline as the time the request entered flow control + its effective time-to-live (TTL).\n\nFairness (across queues in the same priority band): Global Strict compares queue heads using the ordering policy.\n\nTry it yourself: https://alexagriffith.github.io/flow-control-benchmarks/learn/policy-lab/?fairness=strict&ordering=edf",
+      "src": "flow-ordering.mp4",
+      "poster": "posters/flow-ordering.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/policy-lab/?fairness=strict&ordering=edf",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2110472294342565978",
+        "verifiedOn": "2026-10-15"
+      },
+      "videoSha256": "16d9828f0296f6ec8a35b2ea06c7152cca23b01ddd4f9e229435762c035fe1ea",
+      "width": 1000,
+      "height": 700
     }
   ],
   "policySource": "llm-d-router d4b8afd3"
