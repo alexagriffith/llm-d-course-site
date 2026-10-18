@@ -190,6 +190,44 @@
       "videoSha256": "16d9828f0296f6ec8a35b2ea06c7152cca23b01ddd4f9e229435762c035fe1ea",
       "width": 1000,
       "height": 700
+    },
+    {
+      "id": "inference-04-queues",
+      "title": "Queues and overload",
+      "group": "Shared inference paths",
+      "body": "The batch job queue, async request queue, admission queue, and vLLM waiting queue hold work at different stages.",
+      "post": "Where batch jobs and inference requests can queue in an inference platform using vLLM and llm-d.\n\nTry it yourself: https://alexagriffith.github.io/llm-d-course-site/shared-inference/#queues",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/shared-inference/#queues",
+      "width": 1000,
+      "height": 750,
+      "src": "inference-04-queues.mp4",
+      "poster": "posters/inference-04-queues.jpg",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2111201431801729181",
+        "verifiedOn": "2026-10-17"
+      },
+      "videoSha256": "5825679d6b377060ecf5007d34fa62ee8ba4868ea430de37375dd646e93ba0a2"
+    },
+    {
+      "id": "flow-recap",
+      "title": "Shared workloads: recap",
+      "group": "Flow control foundations",
+      "body": "A recap of burst pressure and admission ceilings in a shared pool. A lower batch ceiling leaves headroom for higher-priority requests; it does not guarantee their latency.",
+      "post": "llm-d flow control: a recap.\n\nDifferent workloads have different SLOs. Chat may need fast responses, throughput for batch, and every tenant expects its work to make progress. With @_llm_d_ flow control, we can manage all of these workloads on the same GPUs.\n\nTry it yourself: https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-interactive.html#page-5",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-interactive.html#page-5",
+      "width": 1000,
+      "height": 650,
+      "src": "flow-recap.mp4",
+      "poster": "posters/flow-recap.jpg",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2111205293661274609",
+        "verifiedOn": "2026-10-17"
+      },
+      "videoSha256": "2e404ccf8969ed0844517b50baa454ca5d9fe08f34fd4a18f4f7988ec1013d9c"
     }
   ],
   "policySource": "llm-d-router d4b8afd3"
