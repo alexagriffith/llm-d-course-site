@@ -228,6 +228,25 @@
         "verifiedOn": "2026-10-17"
       },
       "videoSha256": "2e404ccf8969ed0844517b50baa454ca5d9fe08f34fd4a18f4f7988ec1013d9c"
+    },
+    {
+      "id": "flow-queue-grouping",
+      "title": "Grouping requests into queues",
+      "group": "Flow control foundations",
+      "body": "The Endpoint Picker uses the request’s objective to find its priority band, then its fairness ID to choose a queue within that band. Requests with the same priority and fairness ID share a queue.",
+      "post": "llm-d flow control, chapter 7: grouping requests into queues.\n\nThe Endpoint Picker gets the request’s priority from a defined InferenceObjective. That priority value maps to a flow control priority band that the request belongs to.\n\nWithin that band, the fairness ID (tenant) identifies the queue that the request belongs to. Requests with the same priority and fairness ID join the same queue.\n\nTry it yourself: https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-interactive.html#page-6",
+      "src": "flow-queue-grouping.mp4",
+      "poster": "posters/flow-queue-grouping.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-interactive.html#page-6",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2113371380481745209",
+        "verifiedOn": "2026-10-22"
+      },
+      "videoSha256": "96d17b669109aa16495e615b7f0876f28adcb61e66913a0f923499051d84ca10",
+      "width": 1000,
+      "height": 750
     }
   ],
   "policySource": "llm-d-router d4b8afd3"
