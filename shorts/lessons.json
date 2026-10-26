@@ -247,6 +247,44 @@
       "videoSha256": "96d17b669109aa16495e615b7f0876f28adcb61e66913a0f923499051d84ca10",
       "width": 1000,
       "height": 750
+    },
+    {
+      "id": "flow-key",
+      "title": "Same tenant, different priority",
+      "group": "Flow control foundations",
+      "body": "The fairness ID and priority together identify a flow. Tenant A at priority 100 and Tenant A at priority 0 have separate queues.",
+      "post": "llm-d flow control, chapter 8: same tenant, different priority.\n\nTenant A at priority 100 and Tenant A at priority 0 have separate queues. Requests with the same fairness ID AND priority share a queue. That pair is called the FlowKey.\n\nTry it yourself: https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-interactive.html#page-7",
+      "src": "flow-key.mp4",
+      "poster": "posters/flow-key.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-interactive.html#page-7",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2114768968863158313",
+        "verifiedOn": "2026-10-26"
+      },
+      "videoSha256": "b7c307e24b1224bcba39f20337282c052e4a2cd95d586fc90da4706ce53a279f",
+      "width": 1000,
+      "height": 750
+    },
+    {
+      "id": "inference-05-retry",
+      "title": "Errors, results and retry",
+      "group": "Shared inference paths",
+      "body": "The async worker retries eligible failures while the request deadline allows. Otherwise, it publishes a final result for the application to read. The animation illustrates the Redis transport.",
+      "post": "What happens when an inference request is rejected, the model server returns an error, or the connection fails?\n\nWith the async worker, the request will be retried if possible. Otherwise, the final result is put in a queue for the application to read.\n\nTry it yourself: https://alexagriffith.github.io/llm-d-course-site/shared-inference/#retry",
+      "src": "inference-05-retry.mp4",
+      "poster": "posters/inference-05-retry.jpg",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/shared-inference/#retry",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2114757199587127351",
+        "verifiedOn": "2026-10-26"
+      },
+      "videoSha256": "b8f0f3839207e6a34fdf1787a12c9e8ff5453a39bd0f21fd28d1e16a390c0e6d",
+      "width": 1000,
+      "height": 750
     }
   ],
   "policySource": "llm-d-router d4b8afd3"
