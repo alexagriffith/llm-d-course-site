@@ -285,6 +285,26 @@
       "videoSha256": "b8f0f3839207e6a34fdf1787a12c9e8ff5453a39bd0f21fd28d1e16a390c0e6d",
       "width": 1000,
       "height": 750
+    },
+    {
+      "id": "endpoint-saturation",
+      "course": "endpoint-picker",
+      "title": "Saturation",
+      "group": "The Endpoint Picker",
+      "body": "Saturation detectors turn load signals into a score. In the utilization example, each model server gets the higher of its queue-depth and KV-cache threshold ratios; the pool score is their average. These are configured thresholds, not a measurement of physical GPU utilization.",
+      "post": "How does @_llm_d_ measure saturation?\n\nSaturation detectors turn load signals, like requests in flight, queue depth, and KV cache use, into a score.\n\nThe Endpoint Picker uses that score to help decide when to send more work to the model servers.",
+      "src": "endpoint-saturation-b46.mp4",
+      "poster": "posters/endpoint-saturation.jpg",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/chapter.html?c=chapter-01",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2114816713514680469",
+        "verifiedOn": "2026-10-26"
+      },
+      "videoSha256": "119991d17179c35e229f59ae2efa7d30f464666426d1dcf7fc5520bef25ec3d1",
+      "width": 1920,
+      "height": 1080
     }
   ],
   "policySource": "llm-d-router d4b8afd3"

@@ -4,7 +4,7 @@ function linkedText(element,text){
 }
 const data=await fetch('lessons.json').then(r=>r.json());
 const root=document.getElementById('lessons'),nav=document.getElementById('contents');root.textContent='';
-const selected=data.lessons.filter(item=>item.publication?.url).filter(item=>document.body.dataset.course==='shared-inference'?item.id.startsWith('inference-'):!item.id.startsWith('inference-'));
+const selected=data.lessons.filter(item=>item.publication?.url).filter(item=>(item.course||(item.id.startsWith('inference-')?'shared-inference':'flow-control'))===document.body.dataset.course);
 for(const [i,item] of selected.entries()){
  const a=document.createElement('a');a.href='#'+item.id;a.textContent=`${i+1}. ${item.title}`;nav.append(a);
  const card=document.createElement('article');card.id=item.id;

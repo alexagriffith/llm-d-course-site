@@ -14,6 +14,13 @@
     "action": "Start course →"
   },
   {
+    "id": "endpoint-picker",
+    "title": "The Endpoint Picker",
+    "href": "shorts/endpoint-picker.html",
+    "description": "How llm-d measures saturation to help decide when to send work to model servers.",
+    "action": "Start course →"
+  },
+  {
     "id": "shared-inference",
     "title": "Shared inference",
     "href": "shorts/shared-inference.html",
