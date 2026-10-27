@@ -288,7 +288,7 @@
     },
     {
       "id": "endpoint-saturation",
-      "course": "endpoint-picker",
+      "course": "foundations",
       "title": "Saturation",
       "group": "The Endpoint Picker",
       "body": "Saturation detectors turn load signals into a score. In the utilization example, each model server gets the higher of its queue-depth and KV-cache threshold ratios; the pool score is their average. These are configured thresholds, not a measurement of physical GPU utilization.",

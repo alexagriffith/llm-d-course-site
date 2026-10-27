@@ -5,6 +5,12 @@ assert(fs.readFileSync(path.join(dir,'course.css'),'utf8').includes('video[hidde
 for(const p of ['course.js','flow-control.html','shared-inference.html','endpoint-picker.html'])assert(fs.existsSync(path.join(dir,p)));
 console.log('PASS: '+ids.size+' published lessons, unique IDs, publication URLs, hashes, posters, interactive assets and toggle rule.');
 
-const catalog=JSON.parse(fs.readFileSync(path.join(root,'courses.json')));assert.deepEqual(catalog.map(c=>c.id),['inference-fundamentals','foundations','endpoint-picker','shared-inference','flow-control','red-hat-ai-platform']);for(const c of catalog)assert(fs.existsSync(path.join(root,c.href.split('?')[0])));assert(fs.readFileSync(path.join(dir,'course.js'),'utf8').includes('video.width=item.width'));console.log('PASS: stable player dimensions and one navigation catalog.');
+const catalog=JSON.parse(fs.readFileSync(path.join(root,'courses.json')));assert.deepEqual(catalog.map(c=>c.id),['inference-fundamentals','foundations','shared-inference','flow-control','red-hat-ai-platform']);for(const c of catalog)assert(fs.existsSync(path.join(root,c.href.split('?')[0])));assert(fs.readFileSync(path.join(dir,'course.js'),'utf8').includes('video.width=item.width'));console.log('PASS: stable player dimensions and one navigation catalog.');
 
-const shortCourses=new Set(['flow-control','shared-inference','endpoint-picker']);for(const lesson of data.lessons){const course=lesson.course||(lesson.id.startsWith('inference-')?'shared-inference':'flow-control');assert(shortCourses.has(course),'Unknown short course '+course);}console.log('PASS: every published short belongs to a known course.');
+const shortCourses=new Set(['flow-control','shared-inference','foundations']);for(const lesson of data.lessons){const course=lesson.course||(lesson.id.startsWith('inference-')?'shared-inference':'flow-control');assert(shortCourses.has(course),'Unknown short course '+course);}console.log('PASS: every published short belongs to a known course.');
+
+const llmd=JSON.parse(fs.readFileSync(path.join(root,'chapters.json'))).course.chapters.find(c=>c.id==='chapter-01');
+const saturation=llmd.items.find(i=>i.id==='endpoint-saturation'), published=data.lessons.find(i=>i.id==='endpoint-saturation');
+assert(saturation && published.course==='foundations');assert.equal(saturation.videoSha256,published.videoSha256);assert.equal(saturation.publication.url,published.publication.url);assert(saturation.src.endsWith('/'+published.src));
+assert(fs.readFileSync(path.join(dir,'endpoint-picker.html'),'utf8').includes('chapter.html?c=chapter-01#endpoint-saturation'));
+console.log('PASS: Saturation belongs to llm-d, matches the publication ledger, and retains its old URL.');

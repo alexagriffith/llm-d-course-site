@@ -39,6 +39,13 @@
             ]
           },
           {
+            "id": "endpoint-picker",
+            "title": "The Endpoint Picker",
+            "items": [
+              "endpoint-saturation"
+            ]
+          },
+          {
             "id": "flow-control",
             "title": "Admission and queueing",
             "items": [
@@ -205,6 +212,27 @@
               ]
             },
             "lead": "How llm-d admits, queues, and paces requests under load."
+          },
+          {
+            "id": "endpoint-saturation",
+            "title": "Saturation",
+            "lead": "How llm-d measures saturation to help decide when to send work to model servers.",
+            "src": "https://github.com/alexagriffith/llm-d-course-site/releases/download/short-lessons-20261006/endpoint-saturation-b46.mp4",
+            "poster": "shorts/posters/endpoint-saturation.jpg",
+            "publication": {
+              "platform": "X",
+              "url": "https://x.com/alexa_griffith_/status/2114816713514680469",
+              "verifiedOn": "2026-10-26"
+            },
+            "videoSha256": "119991d17179c35e229f59ae2efa7d30f464666426d1dcf7fc5520bef25ec3d1",
+            "width": 1920,
+            "height": 1080,
+            "details": {
+              "summary": "What saturation measures",
+              "points": [
+                "Saturation detectors turn load signals into a score. In the utilization example, each model server gets the higher of its queue-depth and KV-cache threshold ratios; the pool score is their average. These are configured thresholds, not a measurement of physical GPU utilization."
+              ]
+            }
           }
         ]
       },

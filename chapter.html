@@ -46,6 +46,7 @@
       main.appendChild(walkthroughEl(ch, resolver));
 
       observeReveals(main);
+      if (location.hash) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();
     })().catch((e) => {
       document.getElementById('chapter-title').textContent = 'Could not load chapters.json';
       console.error(e);
