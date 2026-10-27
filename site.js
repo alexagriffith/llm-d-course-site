@@ -57,7 +57,7 @@ function figureEl(item, resolver) {
     const v = document.createElement('video');
     v.controls = true; v.preload = 'none'; v.playsInline = true;
     v.src = resolver.src(item.src);
-    if (item.width && item.height) { v.width = item.width; v.height = item.height; }
+    if (item.width && item.height) { v.width = item.width; v.height = item.height; v.style.height = 'auto'; }
     // Poster: a frame grabbed a few seconds in, so each tile shows a real image
     // without downloading the whole clip. Path mirrors src under assets/posters/.
     v.poster = item.poster || ('assets/posters/' + item.src.replace(/\.[^.]+$/, '.jpg'));
@@ -116,7 +116,7 @@ function walkPartEl(item, resolver, index) {
     const v = document.createElement('video');
     v.controls = true; v.preload = 'none'; v.playsInline = true;
     v.src = resolver.src(item.src);
-    if (item.width && item.height) { v.width = item.width; v.height = item.height; }
+    if (item.width && item.height) { v.width = item.width; v.height = item.height; v.style.height = 'auto'; }
     v.poster = item.poster || ('assets/posters/' + item.src.replace(/\.[^.]+$/, '.jpg'));
     panel.appendChild(v);
   } else {
