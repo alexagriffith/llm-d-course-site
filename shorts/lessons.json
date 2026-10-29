@@ -305,6 +305,25 @@
       "videoSha256": "119991d17179c35e229f59ae2efa7d30f464666426d1dcf7fc5520bef25ec3d1",
       "width": 1920,
       "height": 1080
+    },
+    {
+      "id": "flow-dispatch-ceilings",
+      "title": "Dispatch ceilings",
+      "group": "Flow control foundations",
+      "body": "The usage-limit policy sets a dispatch ceiling for each priority band. Flow control compares pool saturation with that ceiling: at or above it, the band stays queued; below it, the band can dispatch. The Endpoint Picker then selects a model server, and the gateway forwards the request.",
+      "post": "@_llm_d_  flow control, chapter 9: dispatch ceilings.\n\n\nFlow control compares pool saturation with the priority band’s dispatch ceiling. The Endpoint Picker then selects a model server to route the admitted request to.\n\n\nTry it yourself: https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-8",
+      "src": "flow-dispatch-ceilings.mp4",
+      "poster": "posters/flow-dispatch-ceilings.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-8",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2115855671250096490",
+        "verifiedOn": "2026-10-29"
+      },
+      "videoSha256": "53aebf600a175c849466e35079c653644ee84aad0c9148b35acf7d990e650cda",
+      "width": 1000,
+      "height": 750
     }
   ],
   "policySource": "llm-d-router d4b8afd3"
