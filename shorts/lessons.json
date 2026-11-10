@@ -307,6 +307,26 @@
       "height": 1080
     },
     {
+      "id": "endpoint-utilization-metrics",
+      "course": "foundations",
+      "title": "Utilization detector: metrics and scraping",
+      "group": "The Endpoint Picker",
+      "body": "The utilization detector scores model servers from their latest metrics. Staleness policy determines how old readings affect the pool average; an in-flight load producer can correct the queue-depth term for requests the latest scrape has not yet seen.",
+      "post": "How llm-d's utilization detector reads model server metrics, handles stale metrics, and corrects for scrape lag.",
+      "src": "endpoint-utilization-metrics-b56.mp4",
+      "poster": "posters/endpoint-utilization-metrics.jpg",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/chapter.html?c=chapter-01#endpoint-utilization-metrics",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2119998954297524511",
+        "verifiedOn": "2026-11-10"
+      },
+      "videoSha256": "8f4e5231f7ef23304820a85211a791e40597cba92e11c22cf23a6a790424d6bc",
+      "width": 1920,
+      "height": 1080
+    },
+    {
       "id": "flow-dispatch-ceilings",
       "title": "Dispatch ceilings",
       "group": "Flow control foundations",

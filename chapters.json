@@ -42,7 +42,8 @@
             "id": "endpoint-picker",
             "title": "The Endpoint Picker",
             "items": [
-              "endpoint-saturation"
+              "endpoint-saturation",
+              "endpoint-utilization-metrics"
             ]
           },
           {
@@ -231,6 +232,29 @@
               "summary": "What saturation measures",
               "points": [
                 "Saturation detectors turn load signals into a score. In the utilization example, each model server gets the higher of its queue-depth and KV-cache threshold ratios; the pool score is their average. These are configured thresholds, not a measurement of physical GPU utilization."
+              ]
+            }
+          },
+          {
+            "id": "endpoint-utilization-metrics",
+            "title": "Utilization detector: metrics and scraping",
+            "lead": "How llm-d's utilization detector reads model server metrics, handles stale metrics, and corrects for scrape lag.",
+            "src": "https://github.com/alexagriffith/llm-d-course-site/releases/download/short-lessons-20261006/endpoint-utilization-metrics-b56.mp4",
+            "poster": "shorts/posters/endpoint-utilization-metrics.jpg",
+            "publication": {
+              "platform": "X",
+              "url": "https://x.com/alexa_griffith_/status/2119998954297524511",
+              "verifiedOn": "2026-11-10"
+            },
+            "videoSha256": "8f4e5231f7ef23304820a85211a791e40597cba92e11c22cf23a6a790424d6bc",
+            "width": 1920,
+            "height": 1080,
+            "details": {
+              "summary": "How metrics become a saturation score",
+              "points": [
+                "The Endpoint Picker scrapes model-server metrics. The utilization detector scores each model server from its latest readings.",
+                "Metrics older than metricsStalenessThreshold are stale. The video uses the 200 ms default: saturated assigns a stale server a score of 1.0; ignore excludes it from the average.",
+                "With an inflight-load-producer, the queue-depth term includes an estimate for in-flight requests the latest scrape does not yet reflect."
               ]
             }
           }
