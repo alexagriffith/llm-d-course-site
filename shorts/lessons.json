@@ -344,6 +344,44 @@
       "videoSha256": "53aebf600a175c849466e35079c653644ee84aad0c9148b35acf7d990e650cda",
       "width": 1000,
       "height": 750
+    },
+    {
+      "id": "inference-06-objects",
+      "title": "Kubernetes objects",
+      "group": "Shared inference paths",
+      "body": "HTTPRoute connects the Gateway to an InferencePool. The pool selects model server pods and references the Endpoint Picker Service. The Endpoint Picker uses its stored InferenceObjective to assign request priority.",
+      "post": "How do we configure an inference stack with llm-d, KServe, Envoy, and vLLM?\n\nTry it yourself: https://alexagriffith.github.io/llm-d-course-site/shared-inference/#objects",
+      "src": "inference-06-objects.mp4",
+      "poster": "posters/inference-06-objects.jpg",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/shared-inference/#objects",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2123114768190042489",
+        "verifiedOn": "2026-11-19"
+      },
+      "videoSha256": "ac88eb0037625b2573cc3cfe4c07546c8534c5da31c4d3f86a068b5f42efde52",
+      "width": 1000,
+      "height": 750
+    },
+    {
+      "id": "flow-dispatch",
+      "title": "The dispatch cycle",
+      "group": "Flow control foundations",
+      "body": "The default strict band-selection policy checks higher numerical priorities first. An eligible band with queued work supplies a request through its configured fairness and ordering policies. Each cycle releases at most one request toward endpoint selection; the next cycle starts again at the highest priority.",
+      "post": "@_llm_d_ 's flow control, chapter 10: the dispatch cycle.\n\nThe default \"strict-band-selection-policy\" checks higher numerical priority bands first. If the pool saturation is below the band’s dispatch ceiling, the fairness policy is then enacted to select a queue within that priority band. The ordering policy then determines the head item in that queue to release. Each dispatch cycle releases at most one request.\n\nhttps://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-9",
+      "src": "flow-dispatch.mp4",
+      "poster": "posters/flow-dispatch.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-9",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2123161869556859037",
+        "verifiedOn": "2026-11-19"
+      },
+      "videoSha256": "4c984a2f9b884f3a22e4b2124b427438bf038211cb8b603ec56db9b79d1b7028",
+      "width": 1000,
+      "height": 750
     }
   ],
   "policySource": "llm-d-router d4b8afd3"
