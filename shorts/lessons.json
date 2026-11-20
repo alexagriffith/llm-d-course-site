@@ -382,6 +382,25 @@
       "videoSha256": "4c984a2f9b884f3a22e4b2124b427438bf038211cb8b603ec56db9b79d1b7028",
       "width": 1000,
       "height": 750
+    },
+    {
+      "id": "inference-07-resource-creation",
+      "title": "What KServe creates",
+      "group": "Shared inference paths",
+      "body": "In this single-node example with KServe-managed routing, an LLMInferenceService drives creation of the vLLM and Endpoint Picker Deployments, the picker Service, InferencePool and HTTPRoute. Kubernetes starts the pods; the Gateway is provisioned separately.",
+      "post": "What does KServe create when you deploy a model?\n\nYou specify the model, replicas and routing in an LLMInferenceService. KServe creates or updates the resources that bring that configuration to life.\n\nIn this single-node example with KServe-managed routing, it creates Deployments for vLLM and the Endpoint Picker. Kubernetes then starts their pods.\n\nKServe also creates the picker’s Service, an InferencePool and an HTTPRoute. The HTTPRoute connects a Gateway you’ve provisioned separately to the InferencePool.\n\nFollow the resource creation in the interactive diagram.\nhttps://alexagriffith.github.io/llm-d-course-site/shared-inference/#objects",
+      "src": "inference-07-resource-creation.mp4",
+      "poster": "posters/inference-07-resource-creation.jpg",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/shared-inference/#objects",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2123507134935544095",
+        "verifiedOn": "2026-11-20"
+      },
+      "videoSha256": "f577f4e0496368cfb7141a30ee710bd8f54233f3bab706e3369a6946a3407b16",
+      "width": 1000,
+      "height": 750
     }
   ],
   "policySource": "llm-d-router d4b8afd3"
