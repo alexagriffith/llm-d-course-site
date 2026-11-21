@@ -401,6 +401,44 @@
       "videoSha256": "f577f4e0496368cfb7141a30ee710bd8f54233f3bab706e3369a6946a3407b16",
       "width": 1000,
       "height": 750
+    },
+    {
+      "id": "flow-tenant-fairness",
+      "title": "Tenant fairness",
+      "group": "Flow control foundations",
+      "body": "Round-robin fairness gives nonempty tenant queues in an eligible priority band dispatch turns. A burst grows one queue without granting it extra turns. This shares dispatch opportunities, not equal token throughput or GPU time.",
+      "post": "llm-d flow control, chapter 11: tenant fairness.\n\nSeveral tenants can share the same priority band. Tenant fairness policies determine how those queues share dispatch turns.\n\nWith round-robin fairness, @_llm_d_ takes turns among nonempty queues whenever the band is eligible to dispatch. The tenant with a burst of requests (for example) keeps making progress while the others continue to get turns.\n\nhttps://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-10",
+      "src": "flow-tenant-fairness.mp4",
+      "poster": "posters/flow-tenant-fairness.jpg",
+      "learner": "https://alexagriffith.github.io/flow-control-benchmarks/learn/flow-control-journey.html#page-10",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2123888692679065727",
+        "verifiedOn": "2026-11-21"
+      },
+      "videoSha256": "262f1a242523f49e693aef5d1d6d850c45e11c4029be66d9012ee1a0f7f6f696",
+      "width": 1000,
+      "height": 750
+    },
+    {
+      "id": "inference-08-shared-objectives",
+      "title": "Multiple objectives, one pool",
+      "group": "Shared inference paths",
+      "body": "Interactive and background requests can use different InferenceObjectives while sharing one InferencePool. The Endpoint Picker resolves the objective named by each request and applies its priority for flow control. Priority does not imply dedicated model servers or guaranteed latency.",
+      "post": "Can interactive and background requests share the same model servers?\n\nWith llm-d, you can give them different priorities while using the same pool of vLLM replicas.\n\nYou configure each priority in a Kubernetes object called an InferenceObjective. In this example, interactive uses priority 100 and background uses priority 10. Both objects refer to the same model pool.\n\nEach request names the objective it needs in a header. The Endpoint Picker looks up that objective and uses its priority for flow control.\n\nExplore “Objectives sharing a pool” in the interactive diagram.\nhttps://alexagriffith.github.io/llm-d-course-site/shared-inference/#priority",
+      "src": "inference-08-shared-objectives.mp4",
+      "poster": "posters/inference-08-shared-objectives.jpg",
+      "learner": "https://alexagriffith.github.io/llm-d-course-site/shared-inference/#priority",
+      "animation": null,
+      "publication": {
+        "platform": "X",
+        "url": "https://x.com/alexa_griffith_/status/2123914750761279688",
+        "verifiedOn": "2026-11-21"
+      },
+      "videoSha256": "5e23cc9142dce89b5ee4965c04c4b0a3f5ce672dd624b37d66f9d2c745709491",
+      "width": 1000,
+      "height": 750
     }
   ],
   "policySource": "llm-d-router d4b8afd3"
